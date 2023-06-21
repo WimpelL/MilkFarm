@@ -17,6 +17,7 @@ public class MakeGread : MonoBehaviour
     {
         get{return _mapSizeX;}
     }
+    
     private static int _mapSizeY;
     public static int MapSizeY
     {

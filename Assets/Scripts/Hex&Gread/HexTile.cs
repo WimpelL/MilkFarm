@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-    public enum EmployStatusType
-    {
-        none, busy
-    }
+public enum EmployStatusType
+{
+    none, busy
+}
 
 public class HexTile : MonoBehaviour
 {

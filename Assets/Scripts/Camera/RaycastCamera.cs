@@ -16,8 +16,8 @@ public class RaycastCamera : MonoBehaviour
     private void LateUpdate()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin,ray.direction,15,
-                                            LayerMask.GetMask("GreadMap"));
+        RaycastHit2D hit = Physics2D
+            .Raycast(ray.origin,ray.direction,15,LayerMask.GetMask("GreadMap"));
         _rayInfo = hit;
 
 
@@ -30,7 +30,7 @@ public class RaycastCamera : MonoBehaviour
             {
                 _hexSelected = hit.collider.gameObject;                
                 _hexTileSelected = _hexSelected.GetComponent<HexTile>();
-                Debug.Log("Name GO " + hit.collider.gameObject.name + " KeyB = " + _hexTileSelected.keyBuild);
+                //Debug.Log("Name GO " + hit.collider.gameObject.name + " KeyB = " + _hexTileSelected.keyBuild);
                 go = goTemp;                
             }
 

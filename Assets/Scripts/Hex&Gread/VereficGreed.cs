@@ -64,7 +64,7 @@ public class VereficGreed : MonoBehaviour
         {
             if(!CompresEmployGreadAndBuildChild(x,y))
             {
-                BuildManager.S.MakeBuild();
+                BuildManager.S.MakeGOBuild();
                 HexTile [] buildChild = BuildingGread.HexSeven(x,y);
                 for (int i = 0; i < buildChild.Length; i++)
                 {

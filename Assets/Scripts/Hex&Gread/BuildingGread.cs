@@ -19,14 +19,9 @@ public class BuildingGread
                 HexDB.LoadHexagenTileDB(x+1,y-1),
                 HexDB.LoadHexagenTileDB(x-1,y-1)
             };
-
-            //arrPosHexOnMap[x,y],
-            //arrPosHexOnMap[],
-            //arrPosHexOnMap[],               //       4.5
-            //arrPosHexOnMap[],               //  3.4 |4.4| 5.4
-            //arrPosHexOnMap[],               //  3.3  4.3  5.3
-            //arrPosHexOnMap[],
-            //arrPosHexOnMap[]
+            //       4.5
+            //  3.4 |4.4| 5.4
+            //  3.3  4.3  5.3
         } 
         else
         {
@@ -39,15 +34,9 @@ public class BuildingGread
                 HexDB.LoadHexagenTileDB(x-1,y+1),
                 HexDB.LoadHexagenTileDB(x+1,y+1)
             };
-
-            /*arrPosHexOnMap[x,y],
-            arrPosHexOnMap[x,y+1],
-            arrPosHexOnMap[x,y-1],               //  2.4  3.4  4.4     
-            arrPosHexOnMap[x-1,y],               //  2.3 |3.3| 4.3
-            arrPosHexOnMap[x+1,y],               //       3.2
-            arrPosHexOnMap[x-1,y+1], 
-            arrPosHexOnMap[x+1,y+1]*/  
-
+            //  2.4  3.4  4.4     
+            //  2.3 |3.3| 4.3
+            //       3.2
         }
         return buildChild;
     } 
