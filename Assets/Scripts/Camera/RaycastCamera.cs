@@ -21,10 +21,8 @@ public class RaycastCamera : MonoBehaviour
         _rayInfo = hit;
 
 
-        if (hit.collider != null 
-            && hit.collider.gameObject.GetComponent<SpriteRenderer>() != null)
+        if (hit.collider != null  && hit.collider.gameObject.GetComponent<SpriteRenderer>() != null)
         {
-
             goTemp = hit.collider.gameObject.name;
             if(goTemp != go)
             {

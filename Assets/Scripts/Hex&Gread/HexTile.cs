@@ -15,5 +15,4 @@ public class HexTile : MonoBehaviour
     public int posGoOnMapY;
     public int keyBuild;
 
-
 }

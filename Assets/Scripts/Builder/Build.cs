@@ -15,6 +15,8 @@ public class Build
     public float storageResursNeed = 0.0f;
     public int unit;
     public float spead = 0.0f;
+    
+    public string name;
 }
 
 

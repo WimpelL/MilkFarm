@@ -5,17 +5,23 @@ using UnityEngine;
 public class HexDB : MonoBehaviour
 {
 
-    private static Dictionary<Vector2Int,HexTile> HexagenTileDB = new Dictionary<Vector2Int, HexTile>();
+    private static Dictionary<Vector2Int,HexTile> _hexagenTileDB = new Dictionary<Vector2Int, HexTile>();
 
     public static void SaveHexagenTileDB (HexTile hexSave, int x, int y)
     {
         Vector2Int vec = new Vector2Int(x,y);
-        HexagenTileDB.Add(vec, hexSave);
+        _hexagenTileDB.Add(vec, hexSave);
     }
     public static HexTile LoadHexagenTileDB(int x, int y)
     {
         Vector2Int vec = new Vector2Int(x,y);
-        return HexagenTileDB[vec];
+        return _hexagenTileDB[vec];
     }
+    /*public static HexTile [] SorchDBForKeyBuild(int key)
+    {
+        List <HexTile> result = new List<HexTile>();
+
+
+    }*/
 
 }

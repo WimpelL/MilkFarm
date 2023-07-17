@@ -14,6 +14,9 @@ abstract public class BuildBuilder
         return Build;
     }
     public abstract void SetOptionsBuild();
-    public abstract void SetBuildToDB();
+
+    // Потрібна реалізіція цієї функції
+
+    public abstract void SetBuildToDB(); 
 
 }

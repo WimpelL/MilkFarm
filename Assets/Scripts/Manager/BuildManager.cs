@@ -41,16 +41,16 @@ public class BuildManager : MonoBehaviour
         sprTemp.sprite = cowHause;
 
         goBuildDic.Add(MakeKeyBuild(), goBuild);
-        Debug.Log("buildDic.Count" + goBuildDic.Count);
+        //Debug.Log("buildDic.Count" + goBuildDic.Count);
 
         MakeBuild();
     }
     private int MakeKeyBuild()
     {
-        int a;
-        if(goBuildDic.Count == 0) a = 1;
-        else a = goBuildDic.Keys.Last()+1;
-        return a;
+        int key;
+        if(goBuildDic.Count == 0) key = 1;
+        else key = goBuildDic.Keys.Last()+1;
+        return key;
     }
 
     private  void MakeBuild()
@@ -58,11 +58,13 @@ public class BuildManager : MonoBehaviour
         dirBuild.SetBuildBuilder(barn);
         dirBuild.ConstructionBuild();
         build = dirBuild.GetBuild();
+        build.name = build.name + MakeKeyBuild();
         BuildDB.SaveBuildDB(build, MakeKeyBuild());
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 
     {
+
         hex.keyBuild = MakeKeyBuild(); 
     }
 

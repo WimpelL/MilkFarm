@@ -19,6 +19,7 @@ public class  MakeGreadBuilder : MonoBehaviour
             mousePosition = Input.mousePosition;
             mousePosition.z = 10.0f; // встановлюємо зміщення по осі Z для перетворення в координати світу
             greadBuilder.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+            UIManager.S.DeletePanelUI(); // знищює стару панель UI
         }
         
     } 

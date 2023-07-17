@@ -19,5 +19,6 @@ class Barn : BuildBuilder
         Build.storageResursNeed = 100f;
         Build.unit = 5;
         Build.spead = 0.1f;
+        Build.name = "Barn";
     }
 }

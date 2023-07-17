@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class Reaction : MonoBehaviour
 {
-    public Canvas go;
-    private void OnMouseDown() {
+    
+    private void OnMouseDown()
+    {
         HexTile hex = gameObject.GetComponent<HexTile>();
+
+        if(hex.statusType == EmployStatusType.none) 
+        {
+            Debug.Log("Non Build");
+            UIManager.S.DeletePanelUI();
+        }
+        else
+        {
+            Debug.Log(BuildDB.LoadBuildDB(hex.keyBuild).name);
+            UIManager.S.CreatePanelUI();
+            UIManager.S.LoadInfoPanelUIForBuild(hex);
+        }
     }
 }
