@@ -17,8 +17,7 @@ public class BuildManager : MonoBehaviour
     public Sprite magazinHause;
     public GameObject prefabHause;
 
-    [Header("Dynamikally")]
-    public Dictionary<int, GameObject> goBuildDic = new Dictionary<int, GameObject>();
+    
 
 
     private Build build;   
@@ -26,6 +25,7 @@ public class BuildManager : MonoBehaviour
     private DirBuilder dirBuild = new DirBuilder();
     private GameObject goBuild;
     private SpriteRenderer sprTemp;
+    private int key;
 
 
     private void Start()
@@ -39,18 +39,10 @@ public class BuildManager : MonoBehaviour
         goBuild.transform.position = MakeGreadBuilder.greadBuilder.transform.position;
         sprTemp = goBuild.GetComponent<SpriteRenderer>();
         sprTemp.sprite = cowHause;
-
-        goBuildDic.Add(MakeKeyBuild(), goBuild);
-        //Debug.Log("buildDic.Count" + goBuildDic.Count);
-
+        key = BuildDB.MakeKeyBuild();
+        BuildDB.SaveGOBuildDB(goBuild, key);
+        
         MakeBuild();
-    }
-    private int MakeKeyBuild()
-    {
-        int key;
-        if(goBuildDic.Count == 0) key = 1;
-        else key = goBuildDic.Keys.Last()+1;
-        return key;
     }
 
     private  void MakeBuild()
@@ -58,14 +50,13 @@ public class BuildManager : MonoBehaviour
         dirBuild.SetBuildBuilder(barn);
         dirBuild.ConstructionBuild();
         build = dirBuild.GetBuild();
-        build.name = build.name + MakeKeyBuild();
-        BuildDB.SaveBuildDB(build, MakeKeyBuild());
+        build.name = build.name + key;
+        BuildDB.SaveBuildDB(build, key);
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 
     {
-
-        hex.keyBuild = MakeKeyBuild(); 
+        hex.keyBuild = key; 
     }
 
 }

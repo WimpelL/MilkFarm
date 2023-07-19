@@ -9,16 +9,6 @@ public class Reaction : MonoBehaviour
     {
         HexTile hex = gameObject.GetComponent<HexTile>();
 
-        if(hex.statusType == EmployStatusType.none) 
-        {
-            Debug.Log("Non Build");
-            UIManager.S.DeletePanelUI();
-        }
-        else
-        {
-            Debug.Log(BuildDB.LoadBuildDB(hex.keyBuild).name);
-            UIManager.S.CreatePanelUI();
-            UIManager.S.LoadInfoPanelUIForBuild(hex);
-        }
+        UIManager.S.InicialUIReaction(hex);
     }
 }

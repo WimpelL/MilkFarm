@@ -14,6 +14,24 @@ public class UIManager : MonoBehaviour
     private GameObject panelUI = null;
     private UIPanel panel;
 
+    public void InicialUIReaction(HexTile hex)
+    {
+        if(hex.statusType == EmployStatusType.none) 
+        {
+            Debug.Log("Non Build");
+            DeletePanelUI();
+        }
+        else
+        {
+            Debug.Log(BuildDB.LoadBuildDB(hex.keyBuild).name);
+            if(BuildDistroer.disBuilder == null)
+            {
+                CreatePanelUI();
+                LoadInfoPanelUIForBuild(hex);
+            }
+        }
+    }
+
     public void LoadInfoPanelUIForBuild( HexTile hex)
     {
         panel.panelTextName.text = BuildDB.LoadBuildDB(hex.keyBuild).name;
@@ -21,9 +39,13 @@ public class UIManager : MonoBehaviour
 
     public void CreatePanelUI()
     {
+
         if(panelUI == null)
-        panelUI = Instantiate<GameObject>(panelUIPrefab, canvas.transform);
-        panel = panelUI.GetComponent<UIPanel>();
+        {
+            panelUI = Instantiate<GameObject>(panelUIPrefab, canvas.transform);
+            panel = panelUI.GetComponent<UIPanel>();
+        }
+
     }
 
     public void DeletePanelUI()

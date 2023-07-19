@@ -50,10 +50,9 @@ public class BuildDistroer : MonoBehaviour
                     _block.SetColor("_Color", clr);
                     disBuilder.GetComponent<Renderer>().SetPropertyBlock(_block);           
 
-                    Replace();
                     go = goTemp;                
                 }
-
+                Replace();
             }
         }
     } 
@@ -62,24 +61,25 @@ public class BuildDistroer : MonoBehaviour
     {
         if(Input.GetMouseButton(0))
         {
-            Debug.Log("Knopca [0] nazhata");
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
-                Debug.Log("Knopca [0] nazhata. Logika 2");
-                // змінення хексів 
-                for (int i = 0; i < HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild).Length; i++)
-                {
-                    HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild)[i].statusType = EmployStatusType.none;
-                    HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild)[i].keyBuild = 0;
-                    _block.SetColor("_Color", Color.blue);
-                    HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild)[i].GetComponent<Renderer>().SetPropertyBlock(_block);
-                }
-                            
+                HexTile [] buildHex = HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
+                Debug.Log(buildHex.Length);
                 // удалить ГО буілд
-                BuildManager.S.goBuildDic.Remove(RaycastCamera.HehTileSelected.keyBuild);
+                BuildDB.DeleteGOBuildInBuildDB(RaycastCamera.HehTileSelected.keyBuild);
 
                 // удалить буілд з БД
-                BuildDB.DeleteBuildInBuildDB(RaycastCamera.HehTileSelected.keyBuild);
+                BuildDB.DeleteBuildInBuildDB(RaycastCamera.HehTileSelected.keyBuild);                
+                // змінення хексів 
+                for (int i = 0; i < buildHex.Length; i++)
+                {
+                    buildHex[i].statusType = EmployStatusType.none;
+                    buildHex[i].keyBuild = 0;
+                    _block.SetColor("_Color", Color.blue);
+                    buildHex[i].GetComponent<Renderer>().SetPropertyBlock(_block);
+                }
+                            
+
                 // знищення дистроїра
                 Destroy(disBuilder); 
 
