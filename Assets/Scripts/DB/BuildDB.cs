@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class BuildDB : MonoBehaviour
 {
-    private static Dictionary<int,Build> BuildsDB = new Dictionary<int, Build>();
+    private static Dictionary<int,Build> _buildsDB = new Dictionary<int, Build>();
 
     public static void SaveBuildDB (Build buildSave, int key)
     {
-        BuildsDB.Add(key, buildSave);
-        Debug.Log("BuildsDB.Count" + BuildsDB.Count);
+       _buildsDB.Add(key, buildSave);
+        Debug.Log("BuildsDB.Count" + _buildsDB.Count);
     }
     public static Build LoadBuildDB(int key)
     {
-        return BuildsDB[key];
+        return _buildsDB[key];
+    }
+    public static void DeleteBuildInBuildDB(int key)
+    {
+        _buildsDB.Remove(key);
     }
     
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class HexDB : MonoBehaviour
 {
@@ -17,11 +18,10 @@ public class HexDB : MonoBehaviour
         Vector2Int vec = new Vector2Int(x,y);
         return _hexagenTileDB[vec];
     }
-    /*public static HexTile [] SorchDBForKeyBuild(int key)
+    public static HexTile [] SorchDBForKeyBuild(int key)
     {
-        List <HexTile> result = new List<HexTile>();
-
-
-    }*/
+        var result = _hexagenTileDB.Values.Where( hex => hex.keyBuild == key).ToArray();
+        return result;
+    }
 
 }

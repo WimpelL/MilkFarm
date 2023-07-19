@@ -12,13 +12,10 @@ public class BuildDistroer : MonoBehaviour
     private string goTemp;
     private string go = "";
     private MaterialPropertyBlock _block;
-    private int mapSizeX;
-    private int mapSizeY;
+
 
     public void Start()
     {
-        mapSizeX = MakeGread.MapSizeX;
-        mapSizeY = MakeGread.MapSizeY;
         _block = new MaterialPropertyBlock();
     }
 
@@ -53,98 +50,42 @@ public class BuildDistroer : MonoBehaviour
                     _block.SetColor("_Color", clr);
                     disBuilder.GetComponent<Renderer>().SetPropertyBlock(_block);           
 
-                    //int x = RaycastCamera.HehTileSelected.posGoOnMapX;                
-                    //int y = RaycastCamera.HehTileSelected.posGoOnMapY;
-
-                    //Color clr = CompresEmployGreadAndBuildChild(x,y) ? Color.red : Color.blue;
-                    //ReplaceEmployGreadForBuildChild( x, y);
-                    if(Input.GetMouseButton(0))
-                    {
-                        if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
-                        {
-                            BuildManager.S.MakeGOBuild(); //??? удалить ГО
-                            HexTile [] buildChild = SorchHexDestroy(RaycastCamera.HehTileSelected);
-                            for (int i = 0; i < buildChild.Length; i++)
-                            {
-                                buildChild[i].statusType = EmployStatusType.busy;
-                                _block.SetColor("_Color", Color.red);
-                                buildChild[i].GetComponent<Renderer>().SetPropertyBlock(_block);
-                                BuildManager.S.OverlayBuildToHexDB(buildChild[i]);
-
-                            }
-                            Destroy(disBuilder); 
-                            for (int x1 = 0; x1 <= mapSizeX; x1++)
-                            {
-                                for (int y1 = 0; y1 <= mapSizeY; y1++)
-                                {
-                                    MakeGread.ArrPosGoOnMap[x1,y1].GetComponent<SpriteRenderer>().enabled = false;
-                                }
-                            }
-
-                        }
-                    }
+                    Replace();
                     go = goTemp;                
                 }
 
             }
         }
-
-
     } 
-    /*private  HexTile [] SorchHexDestroy(HexTile hex)
-    {
-        int keyBuild = hex.keyBuild;
 
-
-        return hexTiles;
-    }*/
-    /*private void ReplaceEmployGreadForBuildChild(int x, int y)
+    private void Replace()
     {
         if(Input.GetMouseButton(0))
         {
+            Debug.Log("Knopca [0] nazhata");
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
-                BuildManager.S.MakeGOBuild();
-                HexTile [] buildChild = BuildingGread.HexSeven(x,y);
-                for (int i = 0; i < buildChild.Length; i++)
+                Debug.Log("Knopca [0] nazhata. Logika 2");
+                // змінення хексів 
+                for (int i = 0; i < HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild).Length; i++)
                 {
-                    buildChild[i].statusType = EmployStatusType.busy;
-                    _block.SetColor("_Color", Color.red);
-                    buildChild[i].GetComponent<Renderer>().SetPropertyBlock(_block);
-                    BuildManager.S.OverlayBuildToHexDB(buildChild[i]);
-
+                    HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild)[i].statusType = EmployStatusType.none;
+                    HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild)[i].keyBuild = 0;
+                    _block.SetColor("_Color", Color.blue);
+                    HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild)[i].GetComponent<Renderer>().SetPropertyBlock(_block);
                 }
-                Destroy(MakeGreadBuilder.greadBuilder); 
-                for (int x1 = 0; x1 <= mapSizeX; x1++)
-                {
-                    for (int y1 = 0; y1 <= mapSizeY; y1++)
-                    {
-                        MakeGread.ArrPosGoOnMap[x1,y1].GetComponent<SpriteRenderer>().enabled = false;
-                    }
-                }
-                
-            }
-        }   
-    }
+                            
+                // удалить ГО буілд
+                BuildManager.S.goBuildDic.Remove(RaycastCamera.HehTileSelected.keyBuild);
 
-    private bool CompresEmployGreadAndBuildChild(int x, int y)
-    {
-        
-        bool result = false;
+                // удалить буілд з БД
+                BuildDB.DeleteBuildInBuildDB(RaycastCamera.HehTileSelected.keyBuild);
+                // знищення дистроїра
+                Destroy(disBuilder); 
 
-        if(x < mapSizeX && y < mapSizeY && x > 0 && y > 0 )
-        {     
-            HexTile [] buildChild = BuildingGread.HexSeven(x,y);
-            
-            for (int i = 0; i < buildChild.Length; i++)
-            {
-                if(buildChild[i].statusType == EmployStatusType.busy)
-                {
-                    result = true;
-                    break;
-                }
+
             }
         }
-        return result;
-    }*/
+
+    }
 }
