@@ -5,35 +5,18 @@ using UnityEngine;
 
 public class BuildDB : MonoBehaviour
 {
-    private static Dictionary<int,Build> _buildsDB = new Dictionary<int, Build>();
+    private static Dictionary<int,Build> _buildsDBDic = new Dictionary<int, Build>();
     private static Dictionary<int, GameObject> _goBuildDic = new Dictionary<int, GameObject>();
 
-    public static void SaveBuildDB (Build buildSave, int key)
+    public static Dictionary<int,Build> BuildsDBDic
     {
-        _buildsDB.Add(key, buildSave);
-        //Debug.Log("BuildsDB.Count" + _buildsDB.Count);
+        get{return _buildsDBDic;}
+        set{_buildsDBDic = value;}
     }
-    public static Build LoadBuildDB(int key)
+    public static Dictionary<int, GameObject> GOBuildDic
     {
-        return _buildsDB[key];
-    }
-    public static void DeleteBuildInBuildDB(int key)
-    {
-        _buildsDB.Remove(key);
-    }
-    public static void SaveGOBuildDB (GameObject buildGOSave, int key)
-    {
-        _goBuildDic.Add(key, buildGOSave);
-        Debug.Log("_goBuildsDB.Count" + _buildsDB.Count);
-    }
-    public static void DeleteGOBuildInBuildDB(int key)
-    {
-        Debug.Log("DeleteGOBuildInBuildDB.key " + key);
-        GameObject gameObjectToRemove = _goBuildDic[key];
-        _goBuildDic.Remove(key);
-        Destroy(gameObjectToRemove);
-        Debug.Log(" _goBuildDic Count" +  _goBuildDic.Count);
-
+        get{return _goBuildDic;}
+        set{_goBuildDic = value;}
     }
     public static int MakeKeyBuild()
     {

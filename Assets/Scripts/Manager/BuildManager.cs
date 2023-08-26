@@ -17,9 +17,6 @@ public class BuildManager : MonoBehaviour
     public Sprite magazinHause;
     public GameObject prefabHause;
 
-    
-
-
     private Build build;   
     private Barn barn = new Barn();
     private DirBuilder dirBuild = new DirBuilder();
@@ -40,8 +37,7 @@ public class BuildManager : MonoBehaviour
         sprTemp = goBuild.GetComponent<SpriteRenderer>();
         sprTemp.sprite = cowHause;
         key = BuildDB.MakeKeyBuild();
-        BuildDB.SaveGOBuildDB(goBuild, key);
-        
+        BuildDB.GOBuildDic.Add(key, goBuild);
         MakeBuild();
     }
 
@@ -51,7 +47,9 @@ public class BuildManager : MonoBehaviour
         dirBuild.ConstructionBuild();
         build = dirBuild.GetBuild();
         build.name = build.name + key;
-        BuildDB.SaveBuildDB(build, key);
+        BuildDB.BuildsDBDic.Add(key,build);
+        ResurcsBD.ResurcesDic[Res.milk] += build.storageResursProduct;
+
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 

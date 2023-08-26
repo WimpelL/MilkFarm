@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class ResurcsManager : MonoBehaviour
 {
+    
 
     public static float Milk
     {
-        get { return milk; }
-        set { milk = value; } 
+        get { return ResurcsBD.ResurcesDic[Res.milk]; }
+        set { ResurcsBD.ResurcesDic[Res.milk] = value; } 
     }
-    private static float milk;
+    
+    private void Update() {
 
+        BarnResGreands();
+    }
 
-}
-public enum Res
-{
-    none,
-    hey,
-    milk,
-    cow,
-    piple,
-    gold
+    private void BarnResGreands()
+    {
+       // ResurcsBD.ResurcesDic[Res.milk] = ResurcsBD.ResurcesDic[Res.milk] + 1; 
+    }
+
 }

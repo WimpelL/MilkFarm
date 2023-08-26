@@ -13,12 +13,10 @@ public class BuildDistroer : MonoBehaviour
     private string go = "";
     private MaterialPropertyBlock _block;
 
-
     public void Start()
     {
         _block = new MaterialPropertyBlock();
     }
-
 
     public void Distroer()
     {
@@ -65,11 +63,8 @@ public class BuildDistroer : MonoBehaviour
             {
                 HexTile [] buildHex = HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
                 Debug.Log(buildHex.Length);
-                // удалить ГО буілд
-                BuildDB.DeleteGOBuildInBuildDB(RaycastCamera.HehTileSelected.keyBuild);
-
-                // удалить буілд з БД
-                BuildDB.DeleteBuildInBuildDB(RaycastCamera.HehTileSelected.keyBuild);                
+                // удалить буілд з БД i ГО буілд
+                DeleteBuild(RaycastCamera.HehTileSelected.keyBuild);                
                 // змінення хексів 
                 for (int i = 0; i < buildHex.Length; i++)
                 {
@@ -77,15 +72,20 @@ public class BuildDistroer : MonoBehaviour
                     buildHex[i].keyBuild = 0;
                     _block.SetColor("_Color", Color.blue);
                     buildHex[i].GetComponent<Renderer>().SetPropertyBlock(_block);
-                }
-                            
-
+                }        
                 // знищення дистроїра
                 Destroy(disBuilder); 
-
-
             }
         }
+    }
+    private void DeleteBuild(int destroyKey)
+    {
+        BuildDB.BuildsDBDic.Remove(destroyKey);
+        Debug.Log("DeleteGOBuildInBuildDB.key " + destroyKey);
+        GameObject gameObjectToRemove = BuildDB.GOBuildDic[destroyKey];
+        BuildDB.GOBuildDic.Remove(destroyKey);
+        Destroy(gameObjectToRemove);
+        Debug.Log(" _goBuildDic Count" + BuildDB.GOBuildDic.Count);
 
     }
 }

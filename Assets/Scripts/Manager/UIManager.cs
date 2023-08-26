@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(BuildDB.LoadBuildDB(hex.keyBuild).name);
+            Debug.Log(BuildDB.BuildsDBDic[hex.keyBuild].name);
             if(BuildDistroer.disBuilder == null)
             {
                 CreatePanelUI();
@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
 
     public void LoadInfoPanelUIForBuild( HexTile hex)
     {
-        panel.panelTextName.text = BuildDB.LoadBuildDB(hex.keyBuild).name;
+        panel.panelTextName.text = BuildDB.BuildsDBDic[hex.keyBuild].name;
     }
 
     public void CreatePanelUI()

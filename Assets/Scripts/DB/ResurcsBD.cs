@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class ResurcsBD : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private static  Dictionary<Res,float> _resurcesDic = new Dictionary<Res, float>()
+        {
+            [Res.hey] =    0,
+            [Res.cow] =    0,
+            [Res.gold] =   0, 
+            [Res.milk] =   0,
+            [Res.piple] =  0
+        };
 
-    // Update is called once per frame
-    void Update()
+    public static Dictionary<Res,float> ResurcesDic
     {
-        
+        get{return _resurcesDic;}
+        set{_resurcesDic = value;}
     }
 }
