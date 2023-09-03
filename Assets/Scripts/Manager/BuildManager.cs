@@ -23,6 +23,8 @@ public class BuildManager : MonoBehaviour
     private GameObject goBuild;
     private SpriteRenderer sprTemp;
     private int key;
+    private ConectBuildDB cBuildDB = new ConectBuildDB();
+    private ConectResurcsDB cResDB = new ConectResurcsDB();
 
 
     private void Start()
@@ -36,8 +38,8 @@ public class BuildManager : MonoBehaviour
         goBuild.transform.position = MakeGreadBuilder.greadBuilder.transform.position;
         sprTemp = goBuild.GetComponent<SpriteRenderer>();
         sprTemp.sprite = cowHause;
-        key = BuildDB.MakeKeyBuild();
-        BuildDB.GOBuildDic.Add(key, goBuild);
+        key = cBuildDB.MakeKeyBuild();
+        cBuildDB.SaveGOBuildDic(key, goBuild);
         MakeBuild();
     }
 
@@ -47,8 +49,9 @@ public class BuildManager : MonoBehaviour
         dirBuild.ConstructionBuild();
         build = dirBuild.GetBuild();
         build.name = build.name + key;
-        BuildDB.BuildsDBDic.Add(key,build);
-        ResurcsBD.ResurcesDic[Res.milk] += build.storageResursProduct;
+        cBuildDB.SaveBuildsDBDic(key,build);
+        cResDB.SaveResurcsBD(Res.milk,build);
+        
 
     }
 

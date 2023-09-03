@@ -5,19 +5,22 @@ using UnityEngine;
 public class BuildingGread
 {
     HexTile [] buildChild;
-    public static HexTile [] HexSeven(int x,int y)
+    ConectHexDB cHexDB = new ConectHexDB();
+
+
+    public  HexTile [] HexSeven(int x,int y)
     {
         HexTile [] buildChild;
         if(x % 2 == 0)
         {
             buildChild = new HexTile [] {
-                HexDB.LoadHexagenTileDB(x,y),
-                HexDB.LoadHexagenTileDB(x,y+1),
-                HexDB.LoadHexagenTileDB(x,y-1),
-                HexDB.LoadHexagenTileDB(x-1,y),
-                HexDB.LoadHexagenTileDB(x+1,y),
-                HexDB.LoadHexagenTileDB(x+1,y-1),
-                HexDB.LoadHexagenTileDB(x-1,y-1)
+                cHexDB.LoadHexagenTileDB(x,y),
+                cHexDB.LoadHexagenTileDB(x,y+1),
+                cHexDB.LoadHexagenTileDB(x,y-1),
+                cHexDB.LoadHexagenTileDB(x-1,y),
+                cHexDB.LoadHexagenTileDB(x+1,y),
+                cHexDB.LoadHexagenTileDB(x+1,y-1),
+                cHexDB.LoadHexagenTileDB(x-1,y-1)
             };
             //       4.5
             //  3.4 |4.4| 5.4
@@ -26,13 +29,13 @@ public class BuildingGread
         else
         {
             buildChild = new HexTile [] {
-                HexDB.LoadHexagenTileDB(x,y),
-                HexDB.LoadHexagenTileDB(x,y+1),
-                HexDB.LoadHexagenTileDB(x,y-1),
-                HexDB.LoadHexagenTileDB(x-1,y),
-                HexDB.LoadHexagenTileDB(x+1,y),
-                HexDB.LoadHexagenTileDB(x-1,y+1),
-                HexDB.LoadHexagenTileDB(x+1,y+1)
+                cHexDB.LoadHexagenTileDB(x,y),
+                cHexDB.LoadHexagenTileDB(x,y+1),
+                cHexDB.LoadHexagenTileDB(x,y-1),
+                cHexDB.LoadHexagenTileDB(x-1,y),
+                cHexDB.LoadHexagenTileDB(x+1,y),
+                cHexDB.LoadHexagenTileDB(x-1,y+1),
+                cHexDB.LoadHexagenTileDB(x+1,y+1)
             };
             //  2.4  3.4  4.4     
             //  2.3 |3.3| 4.3

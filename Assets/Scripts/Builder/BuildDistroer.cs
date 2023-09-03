@@ -12,6 +12,8 @@ public class BuildDistroer : MonoBehaviour
     private string goTemp;
     private string go = "";
     private MaterialPropertyBlock _block;
+    private ConectBuildDB cBuildDB = new ConectBuildDB();
+    private ConectHexDB cHexDB = new ConectHexDB();
 
     public void Start()
     {
@@ -61,7 +63,7 @@ public class BuildDistroer : MonoBehaviour
         {
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
-                HexTile [] buildHex = HexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
+                HexTile [] buildHex = cHexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
                 Debug.Log(buildHex.Length);
                 // удалить буілд з БД i ГО буілд
                 DeleteBuild(RaycastCamera.HehTileSelected.keyBuild);                
@@ -80,12 +82,10 @@ public class BuildDistroer : MonoBehaviour
     }
     private void DeleteBuild(int destroyKey)
     {
-        BuildDB.BuildsDBDic.Remove(destroyKey);
-        Debug.Log("DeleteGOBuildInBuildDB.key " + destroyKey);
-        GameObject gameObjectToRemove = BuildDB.GOBuildDic[destroyKey];
-        BuildDB.GOBuildDic.Remove(destroyKey);
+        cBuildDB.DestroyBuildsDBDic(destroyKey);
+        GameObject gameObjectToRemove = cBuildDB.goOfGOBuildDic(destroyKey);
+        cBuildDB.DestroyGOBuildDic(destroyKey);
         Destroy(gameObjectToRemove);
-        Debug.Log(" _goBuildDic Count" + BuildDB.GOBuildDic.Count);
 
     }
 }

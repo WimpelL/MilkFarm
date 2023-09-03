@@ -7,6 +7,7 @@ public class VereficGreed : MonoBehaviour
     private int mapSizeX;
     private int mapSizeY;
     private MaterialPropertyBlock _block;
+    private BuildingGread bG = new BuildingGread();
 
     public void Start()
     {
@@ -65,7 +66,7 @@ public class VereficGreed : MonoBehaviour
             if(!CompresEmployGreadAndBuildChild(x,y))
             {
                 BuildManager.S.MakeGOBuild();
-                HexTile [] buildChild = BuildingGread.HexSeven(x,y);
+                HexTile [] buildChild = bG.HexSeven(x,y);
                 for (int i = 0; i < buildChild.Length; i++)
                 {
                     buildChild[i].statusType = EmployStatusType.busy;
@@ -95,7 +96,7 @@ public class VereficGreed : MonoBehaviour
 
         if(x < mapSizeX && y < mapSizeY && x > 0 && y > 0 )
         {     
-            HexTile [] buildChild = BuildingGread.HexSeven(x,y);
+            HexTile [] buildChild = bG.HexSeven(x,y);
             
             for (int i = 0; i < buildChild.Length; i++)
             {

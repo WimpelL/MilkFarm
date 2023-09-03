@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
 
     private GameObject panelUI = null;
     private UIPanel panel;
+    private ConectBuildDB cBuildDB = new ConectBuildDB();
 
     public void InicialUIReaction(HexTile hex)
     {
@@ -23,7 +24,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(BuildDB.BuildsDBDic[hex.keyBuild].name);
+            Debug.Log(cBuildDB.buildOfBuildDic(hex.keyBuild).name);
             if(BuildDistroer.disBuilder == null)
             {
                 CreatePanelUI();
@@ -34,7 +35,7 @@ public class UIManager : MonoBehaviour
 
     public void LoadInfoPanelUIForBuild( HexTile hex)
     {
-        panel.panelTextName.text = BuildDB.BuildsDBDic[hex.keyBuild].name;
+        panel.panelTextName.text = cBuildDB.buildOfBuildDic(hex.keyBuild).name;
     }
 
     public void CreatePanelUI()

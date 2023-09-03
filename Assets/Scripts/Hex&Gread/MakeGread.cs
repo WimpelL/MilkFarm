@@ -13,6 +13,7 @@ public class MakeGread : MonoBehaviour
     public int mapSizeY = 10;
 
     private static int _mapSizeX;
+    private ConectHexDB cHexDB = new ConectHexDB();
     public static int MapSizeX
     {
         get{return _mapSizeX;}
@@ -70,6 +71,7 @@ public class MakeGread : MonoBehaviour
         ht.posOnMap = pos;
         ht.posGoOnMapX = x;
         ht.posGoOnMapY = y;
-        HexDB.SaveHexagenTileDB(ht,x,y); 
+        cHexDB.SaveHexagenTileDB(ht,x,y);
+        
     }
 }
