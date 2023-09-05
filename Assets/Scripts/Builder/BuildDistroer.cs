@@ -12,12 +12,14 @@ public class BuildDistroer : MonoBehaviour
     private string goTemp;
     private string go = "";
     private MaterialPropertyBlock _block;
-    private ConectBuildDB cBuildDB = new ConectBuildDB();
-    private ConectHexDB cHexDB = new ConectHexDB();
+    private ConectBuildDB cBuildDB;
+    private ConectHexDB cHexDB;
 
     public void Start()
     {
         _block = new MaterialPropertyBlock();
+        cBuildDB = new ConectBuildDB();
+        cHexDB = new ConectHexDB();
     }
 
     public void Distroer()

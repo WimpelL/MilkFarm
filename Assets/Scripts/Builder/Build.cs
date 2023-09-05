@@ -7,14 +7,14 @@ using UnityEngine;
 [System.Serializable]
 public class Build 
 {
-    public Res resursInstrument = Res.none;
-    public int storageResursInstrument = 0;
+    public int cinaBuild = 0;
+    public int cinaOborud = 0;
+    public int cinaRes = 0;
+    public int oborud = 0;
+    public int maxOborud = 0;
     public Res resursProduct = Res.none;
-    public float storageResursProduct = 0.0f;
-    public Res resursNeed = Res.none;
-    public float storageResursNeed = 0.0f;
-    public int unit;
-    public float spead = 0.0f;
+    public int storageResursProduct = 0;
+    public Dictionary<Res,int> resursNeedDic = new Dictionary<Res, int>();
     public string name;
 }
 

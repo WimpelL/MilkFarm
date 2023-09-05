@@ -13,7 +13,7 @@ public class MakeGread : MonoBehaviour
     public int mapSizeY = 10;
 
     private static int _mapSizeX;
-    private ConectHexDB cHexDB = new ConectHexDB();
+    private ConectHexDB cHexDB;
     public static int MapSizeX
     {
         get{return _mapSizeX;}
@@ -38,6 +38,7 @@ public class MakeGread : MonoBehaviour
 
     private void Awake()
     {
+        cHexDB = new ConectHexDB();
         _mapSizeX = mapSizeX;
         _mapSizeY = mapSizeY;
 

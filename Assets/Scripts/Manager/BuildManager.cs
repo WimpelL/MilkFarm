@@ -18,18 +18,22 @@ public class BuildManager : MonoBehaviour
     public GameObject prefabHause;
 
     private Build build;   
-    private Barn barn = new Barn();
-    private DirBuilder dirBuild = new DirBuilder();
+    private Korivnuk barn;
+    private DirBuilder dirBuild;
     private GameObject goBuild;
     private SpriteRenderer sprTemp;
     private int key;
-    private ConectBuildDB cBuildDB = new ConectBuildDB();
-    private ConectResurcsDB cResDB = new ConectResurcsDB();
+    private ConectBuildDB cBuildDB;
+    private ConectResurcsDB cResDB;
 
 
     private void Start()
     {
         S = this;
+        cBuildDB = new ConectBuildDB();
+        cResDB = new ConectResurcsDB();
+        barn = new Korivnuk();
+        dirBuild = new DirBuilder();
     }
 
     public  void MakeGOBuild()

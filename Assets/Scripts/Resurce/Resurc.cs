@@ -5,9 +5,12 @@ using UnityEngine;
 public enum Res
 {
     none,
-    hey,
-    milk,
-    cow,
+    power,
     piple,
-    gold
+    gold,
+    grass,
+    hey,
+    cow,    
+    milk
+
 }
