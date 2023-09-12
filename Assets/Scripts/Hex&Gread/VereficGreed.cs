@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class VereficGreed : MonoBehaviour
 {
+
+    [Header("Setting MakeGreadBuilder")]
+    public GameObject greadBuilderPrefab;  
+    public static GameObject greadBuilder;
+
+    private Vector3 mousePosition, worldPosition;
     private int mapSizeX;
     private int mapSizeY;
     private MaterialPropertyBlock _block;
     private BuildingGread bG = new BuildingGread();
+    private string tempNameBuilder;
+
 
     public void Start()
     {
@@ -15,13 +23,63 @@ public class VereficGreed : MonoBehaviour
         mapSizeY = MakeGread.MapSizeY;
         _block = new MaterialPropertyBlock();
     }
+    public void BuildingOffice()
+    {
+        tempNameBuilder = "Office";
+        MGB(); 
+    }
+    public void BuildingMagazine()
+    {
+        tempNameBuilder = "Magazine";
+        MGB();
+    }
+    public void BuildingHause()
+    {
+        tempNameBuilder = "Hause";
+        MGB();
+    }
+    public void BuildingPole()
+    {
+        tempNameBuilder = "Pole";
+        MGB();
+    }
+    public void BuildingSinoval()
+    {
+        tempNameBuilder = "Sinoval";
+        MGB();
+    }
+    public void BuildingKorovnik()
+    {
+        tempNameBuilder = "Korovnik";
+        MGB();
+    }
+    public void BuildingDoilka()
+    {
+        tempNameBuilder = "Doilka";
+        MGB();
+    }
+
+    public void MGB()
+    {
+        if(greadBuilder == null)
+        { 
+            //if 'Builder' battum
+            greadBuilder = Instantiate<GameObject>(greadBuilderPrefab);
+            mousePosition = Input.mousePosition;
+            mousePosition.z = 10.0f; // встановлюємо зміщення по осі Z для перетворення в координати світу
+            greadBuilder.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
+            UIManager.S.DeletePanelUI(); // знищює стару панель UI
+            
+        }
+        
+    } 
    
     private void Update()
     {
         string goTemp;
         string go = "";
 
-        if(MakeGreadBuilder.greadBuilder != null)
+        if(greadBuilder != null)
         {
             for (int x = 0; x <= mapSizeX; x++)
             {
@@ -36,7 +94,7 @@ public class VereficGreed : MonoBehaviour
                 goTemp = RaycastCamera.HexSelected.name;
                 if(goTemp != go)
                 {
-                    MakeGreadBuilder.greadBuilder.transform.position = RaycastCamera.HexSelected.transform.position;
+                    greadBuilder.transform.position = RaycastCamera.HexSelected.transform.position;
 
                     int x = RaycastCamera.HehTileSelected.posGoOnMapX;                
                     int y = RaycastCamera.HehTileSelected.posGoOnMapY;
@@ -44,9 +102,9 @@ public class VereficGreed : MonoBehaviour
                     Color clr = CompresEmployGreadAndBuildChild(x,y) ? Color.red : Color.blue;
                     _block.SetColor("_Color", clr);
 
-                    for (int i = 0; i < MakeGreadBuilder.greadBuilder.transform.childCount; i++)
+                    for (int i = 0; i < greadBuilder.transform.childCount; i++)
                     {
-                        GameObject hexOfGreadBuilder = MakeGreadBuilder.greadBuilder.transform.GetChild(i).gameObject;
+                        GameObject hexOfGreadBuilder = greadBuilder.transform.GetChild(i).gameObject;
                         hexOfGreadBuilder.GetComponent<Renderer>().SetPropertyBlock(_block);
                     }              
                     
@@ -65,7 +123,7 @@ public class VereficGreed : MonoBehaviour
         {
             if(!CompresEmployGreadAndBuildChild(x,y))
             {
-                BuildManager.S.MakeGOBuild();
+                BuildManager.S.MakeGOBuild(tempNameBuilder);
                 HexTile [] buildChild = bG.HexSeven(x,y);
                 for (int i = 0; i < buildChild.Length; i++)
                 {
@@ -75,7 +133,7 @@ public class VereficGreed : MonoBehaviour
                     BuildManager.S.OverlayBuildToHexDB(buildChild[i]);
 
                 }
-                Destroy(MakeGreadBuilder.greadBuilder); 
+                Destroy(greadBuilder); 
                 for (int x1 = 0; x1 <= mapSizeX; x1++)
                 {
                     for (int y1 = 0; y1 <= mapSizeY; y1++)

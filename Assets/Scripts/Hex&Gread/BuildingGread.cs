@@ -6,12 +6,6 @@ public class BuildingGread
 {
     HexTile [] buildChild;
     ConectHexDB cHexDB = new ConectHexDB();
-    private void Awake()
-    {
-        cHexDB = new ConectHexDB();
-    }
-
-
     public  HexTile [] HexSeven(int x,int y)
     {
         HexTile [] buildChild;

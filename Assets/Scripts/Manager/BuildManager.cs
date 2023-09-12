@@ -10,11 +10,13 @@ public class BuildManager : MonoBehaviour
     public static BuildManager S;
 
     [Header("Setting")]
-    public Sprite manHause;
-    public Sprite cowHause;
-    public Sprite hayHause;
-    public Sprite skladHause;
-    public Sprite magazinHause;
+    public Sprite office;
+    public Sprite magazin;
+    public Sprite hause;
+    public Sprite pole;
+    public Sprite sinoval;
+    public Sprite korovnik;
+    public Sprite doilnia;
     public GameObject prefabHause;
 
     private Build build;   
@@ -34,16 +36,39 @@ public class BuildManager : MonoBehaviour
         cResDB = new ConectResurcsDB();
         barn = new Korivnuk();
         dirBuild = new DirBuilder();
+
     }
 
-    public  void MakeGOBuild()
+    /*
+
+
+
+    public void BuildingDoilka()
     {
+        tempNameBuilder = "Doilka";
+        MGB();
+    }
+    */
+
+    public  void MakeGOBuild(string tempNameBuilder)
+    {
+        
         goBuild = Instantiate(prefabHause) as GameObject;
-        goBuild.transform.position = MakeGreadBuilder.greadBuilder.transform.position;
+        goBuild.transform.position = VereficGreed.greadBuilder.transform.position;
         sprTemp = goBuild.GetComponent<SpriteRenderer>();
-        sprTemp.sprite = cowHause;
         key = cBuildDB.MakeKeyBuild();
-        cBuildDB.SaveGOBuildDic(key, goBuild);
+        cBuildDB.SaveGOBuildDic(key, goBuild);  
+
+        if(tempNameBuilder == "Office") sprTemp.sprite = office;
+        else if(tempNameBuilder == "Magazine") sprTemp.sprite = magazin;
+        else if(tempNameBuilder == "Hause") sprTemp.sprite = hause;
+        else if(tempNameBuilder == "Pole") sprTemp.sprite = pole;
+        else if(tempNameBuilder == "Sinoval") sprTemp.sprite = sinoval;
+        else if(tempNameBuilder == "Korovnik") sprTemp.sprite = korovnik;
+        else if(tempNameBuilder == "Doilka") sprTemp.sprite = doilnia;
+        else Debug.Log("Сбой в методу MakeGOBuild");
+        tempNameBuilder ="";
+
         MakeBuild();
     }
 
