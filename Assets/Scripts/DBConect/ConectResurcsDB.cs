@@ -7,6 +7,7 @@ public class ConectResurcsDB : MonoBehaviour
     public void SaveResurcsBD(Res res, Build build)
     {
         ResurcsBD.ResurcesDic[res] += build.storageResursProduct;
+        Debug.Log("!!!!!!!    " + build.name);
     }
     
 }

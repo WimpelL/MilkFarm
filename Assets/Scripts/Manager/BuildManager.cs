@@ -20,7 +20,14 @@ public class BuildManager : MonoBehaviour
     public GameObject prefabHause;
 
     private Build build;   
-    private Korivnuk barn;
+    private Korivnuk buildKorivnuk;
+    private Hause buildHause;
+    private Magazin buildMagazin;
+    private Molocodoil buildMolocodoil;
+    private Office buildOffice;
+    private Pole buildPole;
+    private Sinoval buildSinoval;
+
     private DirBuilder dirBuild;
     private GameObject goBuild;
     private SpriteRenderer sprTemp;
@@ -34,21 +41,18 @@ public class BuildManager : MonoBehaviour
         S = this;
         cBuildDB = new ConectBuildDB();
         cResDB = new ConectResurcsDB();
-        barn = new Korivnuk();
         dirBuild = new DirBuilder();
 
+        buildOffice = new Office();
+        buildMagazin = new Magazin();
+        buildHause = new Hause();
+        buildPole = new Pole();
+        buildSinoval = new Sinoval();
+        buildKorivnuk = new Korivnuk();
+        buildMolocodoil = new Molocodoil();
+
     }
 
-    /*
-
-
-
-    public void BuildingDoilka()
-    {
-        tempNameBuilder = "Doilka";
-        MGB();
-    }
-    */
 
     public  void MakeGOBuild(string tempNameBuilder)
     {
@@ -58,30 +62,69 @@ public class BuildManager : MonoBehaviour
         sprTemp = goBuild.GetComponent<SpriteRenderer>();
         key = cBuildDB.MakeKeyBuild();
         cBuildDB.SaveGOBuildDic(key, goBuild);  
+        
 
-        if(tempNameBuilder == "Office") sprTemp.sprite = office;
-        else if(tempNameBuilder == "Magazine") sprTemp.sprite = magazin;
-        else if(tempNameBuilder == "Hause") sprTemp.sprite = hause;
-        else if(tempNameBuilder == "Pole") sprTemp.sprite = pole;
-        else if(tempNameBuilder == "Sinoval") sprTemp.sprite = sinoval;
-        else if(tempNameBuilder == "Korovnik") sprTemp.sprite = korovnik;
-        else if(tempNameBuilder == "Doilka") sprTemp.sprite = doilnia;
-        else Debug.Log("Сбой в методу MakeGOBuild");
+        if(tempNameBuilder == "Office")
+        {
+            dirBuild.SetBuildBuilder(buildOffice);
+            MakeBuild();
+            sprTemp.sprite = office;
+            cResDB.SaveResurcsBD(Res.power,build);
+        } 
+        else if(tempNameBuilder == "Magazine")
+        {
+            dirBuild.SetBuildBuilder(buildMagazin);
+            MakeBuild();
+            sprTemp.sprite = magazin;
+            cResDB.SaveResurcsBD(Res.gold,build);
+        } 
+        else if(tempNameBuilder == "Hause")
+        {
+            dirBuild.SetBuildBuilder(buildHause);
+            MakeBuild();
+            sprTemp.sprite = hause;
+            cResDB.SaveResurcsBD(Res.piple,build);
+        } 
+        else if(tempNameBuilder == "Pole")
+        {
+            dirBuild.SetBuildBuilder(buildPole);
+            MakeBuild();
+            sprTemp.sprite = pole;
+            cResDB.SaveResurcsBD(Res.grass,build);
+        } 
+        else if(tempNameBuilder == "Sinoval")
+        {
+            dirBuild.SetBuildBuilder(buildSinoval);
+            MakeBuild();
+            sprTemp.sprite = sinoval;
+            cResDB.SaveResurcsBD(Res.hey,build);
+        } 
+        else if(tempNameBuilder == "Korovnik")
+        {
+            dirBuild.SetBuildBuilder(buildKorivnuk);
+            MakeBuild();
+            sprTemp.sprite = korovnik;
+            cResDB.SaveResurcsBD(Res.cow,build);
+        } 
+        else if(tempNameBuilder == "Doilka")
+        {
+            dirBuild.SetBuildBuilder(buildMolocodoil);
+            MakeBuild();
+            sprTemp.sprite = doilnia;
+            cResDB.SaveResurcsBD(Res.milk,build);
+        } 
+        else Debug.Log("Сбой методу MakeGOBuild");
         tempNameBuilder ="";
 
-        MakeBuild();
     }
 
     private  void MakeBuild()
     {
-        dirBuild.SetBuildBuilder(barn);
         dirBuild.ConstructionBuild();
         build = dirBuild.GetBuild();
         build.name = build.name + key;
         cBuildDB.SaveBuildsDBDic(key,build);
-        cResDB.SaveResurcsBD(Res.milk,build);
         
-
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 

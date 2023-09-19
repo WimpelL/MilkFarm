@@ -8,7 +8,13 @@ public class UIManager : MonoBehaviour
     public static UIManager S;
 
     public GameObject panelUIPrefab;
-    public TextMeshProUGUI milk;
+    public TextMeshProUGUI textPower;
+    public TextMeshProUGUI textPiple;
+    public TextMeshProUGUI textGold;
+    public TextMeshProUGUI textGrass;
+    public TextMeshProUGUI textHey;
+    public TextMeshProUGUI textCow;
+    public TextMeshProUGUI textMilk;
     public Canvas canvas;
 
     private GameObject panelUI = null;
@@ -61,15 +67,25 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         S = this;
-
-        milk.text = "Milk: " + ResurcsManager.Milk;
-        
+        textPower.text = "енергії: " + ResurcsBD.ResurcesDic[Res.power];
+        textPiple.text = "робітників: " + ResurcsBD.ResurcesDic[Res.piple];
+        textGold.text = "грошей: " + ResurcsBD.ResurcesDic[Res.gold];
+        textGrass.text = "трави: " + ResurcsBD.ResurcesDic[Res.grass];
+        textHey.text = "сіна: " + ResurcsBD.ResurcesDic[Res.hey];
+        textCow.text = "корів: " + ResurcsBD.ResurcesDic[Res.cow];
+        textMilk.text = "молока: " + ResurcsBD.ResurcesDic[Res.milk];
     }
 
 
     void Update()
     {
-        milk.text = "Milk: " + ResurcsManager.Milk;
+        textPower.text = "енергії: " + ResurcsBD.ResurcesDic[Res.power];
+        textPiple.text = "робітників: " + ResurcsBD.ResurcesDic[Res.piple];
+        textGold.text = "грошей: " + ResurcsBD.ResurcesDic[Res.gold];
+        textGrass.text = "трави: " + ResurcsBD.ResurcesDic[Res.grass];
+        textHey.text = "сіна: " + ResurcsBD.ResurcesDic[Res.hey];
+        textCow.text = "корів: " + ResurcsBD.ResurcesDic[Res.cow];
+        textMilk.text = "молока: " + ResurcsBD.ResurcesDic[Res.milk];
         
     }
 }
