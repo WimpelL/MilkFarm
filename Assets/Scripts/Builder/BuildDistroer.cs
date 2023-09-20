@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BuildDistroer : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class BuildDistroer : MonoBehaviour
         {
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
-                HexTile [] buildHex = cHexDB.SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
+                HexTile [] buildHex = SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
                 Debug.Log(buildHex.Length);
                 // удалить буілд з БД i ГО буілд
                 DeleteBuild(RaycastCamera.HehTileSelected.keyBuild);                
@@ -84,10 +85,15 @@ public class BuildDistroer : MonoBehaviour
     }
     private void DeleteBuild(int destroyKey)
     {
-        cBuildDB.DestroyBuildsDBDic(destroyKey);
-        GameObject gameObjectToRemove = cBuildDB.goOfGOBuildDic(destroyKey);
-        cBuildDB.DestroyGOBuildDic(destroyKey);
+        cBuildDB.RemoveBuildToBuildsDBDic(destroyKey);
+        GameObject gameObjectToRemove = cBuildDB.InfoGOBuildDBDic[destroyKey];
+        cBuildDB.RemoveGOToGOBuildDic(destroyKey);
         Destroy(gameObjectToRemove);
 
+    } 
+    public HexTile [] SorchDBForKeyBuild(int key)
+    {
+        var result = cHexDB.InfoHexagenTileDB.Values.Where( hex => hex.keyBuild == key).ToArray();
+        return result;
     }
 }

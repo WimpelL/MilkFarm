@@ -6,9 +6,9 @@ public class ResurcsBD : MonoBehaviour
 {
     private static  Dictionary<Res,float> _resurcesDic = new Dictionary<Res, float>()
         {
-            [Res.power] = 0,
-            [Res.piple] = 0,
-            [Res.gold]  = 0,
+            [Res.power] = 2,
+            [Res.piple] = 2,
+            [Res.gold]  = 100,
             [Res.grass] = 0,
             [Res.hey]   = 0,
             [Res.cow]   = 0,

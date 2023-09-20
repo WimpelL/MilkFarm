@@ -1,45 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class ConectBuildDB : MonoBehaviour
 {
-    public void SaveGOBuildDic(int key, GameObject goBuild)
+    public void AddGOToGOBuildDic(int key, GameObject goBuild)
     {
         BuildDB.GOBuildDBDic.Add(key, goBuild);
     }
 
-    public void SaveBuildsDBDic(int key, Build build)
+    public void AddBuildToBuildsDBDic(int key, Build build)
     {
         BuildDB.BuildsDBDic.Add(key,build);
     }
-    public int MakeKeyBuild()
+    public Dictionary<int,Build> InfoBuildsDBDic
     {
-        int key;
-        if(BuildDB.BuildsDBDic.Count == 0) key = 1;
-        else key = BuildDB.BuildsDBDic.Keys.Max() + 1;
-        return key;
+        get{return BuildDB.BuildsDBDic;}
     }
-    public void DestroyBuildsDBDic(int destroyKey)
+    public  Dictionary<int, GameObject> InfoGOBuildDBDic
+    {
+        get{return BuildDB.GOBuildDBDic;}
+    }
+
+    public void RemoveBuildToBuildsDBDic(int destroyKey)
     {
         BuildDB.BuildsDBDic.Remove(destroyKey);
     }
-    public void DestroyGOBuildDic(int destroyKey)
+    public void RemoveGOToGOBuildDic(int destroyKey)
     {
         BuildDB.GOBuildDBDic.Remove(destroyKey);
     }
-
-
-    public GameObject goOfGOBuildDic(int key)
-    {
-        return BuildDB.GOBuildDBDic[key];
-    }
-    public Build buildOfBuildDic(int key)
-    {
-        return BuildDB.BuildsDBDic[key];
-    }
-
     
 
     

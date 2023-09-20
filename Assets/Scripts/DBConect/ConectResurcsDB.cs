@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConectResurcsDB : MonoBehaviour
+public class ConectResurcsDB 
 {
-    public void SaveResurcsBD(Res res, Build build)
+    public void AddResToResurcsBD(Res res, int quantity)
     {
-        ResurcsBD.ResurcesDic[res] += build.storageResursProduct;
-        Debug.Log("!!!!!!!    " + build.name);
+        ResurcsBD.ResurcesDic[res] += quantity;
+    }
+    public void RemoveResToResurcsBD(Res res, int quantity)
+    {
+        ResurcsBD.ResurcesDic[res] -= quantity;
+    }
+    public Dictionary<Res,float> InfoResurcesDic
+    {
+        get{return  ResurcsBD.ResurcesDic;}
     }
     
 }

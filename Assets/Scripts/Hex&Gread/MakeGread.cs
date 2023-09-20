@@ -72,7 +72,7 @@ public class MakeGread : MonoBehaviour
         ht.posOnMap = pos;
         ht.posGoOnMapX = x;
         ht.posGoOnMapY = y;
-        cHexDB.SaveHexagenTileDB(ht,x,y);
+        cHexDB.AddHexToTileDB(ht,x,y);
         
     }
 }

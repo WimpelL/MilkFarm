@@ -1,25 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class ConectHexDB : MonoBehaviour
 {
-    public void SaveHexagenTileDB (HexTile hexSave, int x, int y)
+    public void AddHexToTileDB (HexTile hexSave, int x, int y)
     {
         Vector2Int vec = new Vector2Int(x,y);
         HexDB.HexagenTileDB.Add(vec, hexSave);
     }
-    public HexTile LoadHexagenTileDB(int x, int y)
+    public Dictionary<Vector2Int,HexTile> InfoHexagenTileDB
     {
-        Vector2Int vec = new Vector2Int(x,y);
-        
-        return HexDB.HexagenTileDB[vec];
+        get{return HexDB.HexagenTileDB;}
     }
-    public HexTile [] SorchDBForKeyBuild(int key)
-    {
-        var result = HexDB.HexagenTileDB.Values.Where( hex => hex.keyBuild == key).ToArray();
-        return result;
-    }
+
+
 
 }

@@ -12,13 +12,13 @@ public class BuildingGread
         if(x % 2 == 0)
         {
             buildChild = new HexTile [] {
-                cHexDB.LoadHexagenTileDB(x,y),
-                cHexDB.LoadHexagenTileDB(x,y+1),
-                cHexDB.LoadHexagenTileDB(x,y-1),
-                cHexDB.LoadHexagenTileDB(x-1,y),
-                cHexDB.LoadHexagenTileDB(x+1,y),
-                cHexDB.LoadHexagenTileDB(x+1,y-1),
-                cHexDB.LoadHexagenTileDB(x-1,y-1)
+                Vec(x,y),
+                Vec(x,y+1),
+                Vec(x,y-1),
+                Vec(x-1,y),
+                Vec(x+1,y),
+                Vec(x+1,y-1),
+                Vec(x-1,y-1)
             };
             //       4.5
             //  3.4 |4.4| 5.4
@@ -27,13 +27,13 @@ public class BuildingGread
         else
         {
             buildChild = new HexTile [] {
-                cHexDB.LoadHexagenTileDB(x,y),
-                cHexDB.LoadHexagenTileDB(x,y+1),
-                cHexDB.LoadHexagenTileDB(x,y-1),
-                cHexDB.LoadHexagenTileDB(x-1,y),
-                cHexDB.LoadHexagenTileDB(x+1,y),
-                cHexDB.LoadHexagenTileDB(x-1,y+1),
-                cHexDB.LoadHexagenTileDB(x+1,y+1)
+                Vec(x,y),
+                Vec(x,y+1),
+                Vec(x,y-1),
+                Vec(x-1,y),
+                Vec(x+1,y),
+                Vec(x-1,y+1),
+                Vec(x+1,y+1)
             };
             //  2.4  3.4  4.4     
             //  2.3 |3.3| 4.3
@@ -41,5 +41,10 @@ public class BuildingGread
         }
         return buildChild;
     } 
+    private HexTile Vec (int x, int y)
+    {
+        Vector2Int vec = new Vector2Int(x,y);
+        return cHexDB.InfoHexagenTileDB[vec];
+    }
 }
 
