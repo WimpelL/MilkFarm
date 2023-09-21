@@ -13,13 +13,13 @@ public class Pole : BuildBuilder
         Build.cinaRes = 1;
         Build.oborud = 1;
         Build.maxOborud = 10;
-        Build.resursProduct = Res.hey;
+        Build.resursProduct = Res.grass;
         Build.storageResursProduct = 1;
         Build.resursNeedDic = new Dictionary<Res, int>
         {
-            { Res.gold, -1 }, 
-            { Res.piple,-1 },
-            { Res.power,-1 } 
+            { Res.gold,  1 }, 
+            { Res.piple, 1 },
+            { Res.power, 1 } 
         };
         Build.name = "Pole";
     }

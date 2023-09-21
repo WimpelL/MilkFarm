@@ -14,9 +14,9 @@ public class Magazin : BuildBuilder
         Build.storageResursProduct = 1;
         Build.resursNeedDic = new Dictionary<Res, int>
         {
-            { Res.piple, -1 }  ,
-            { Res.power, -1 }  ,
-            { Res.milk,  -1 }  
+            { Res.piple,  1 }  ,
+            { Res.power,  1 }  ,
+            { Res.milk,   1 }  
         };
         Build.name = "Magazin";
     }

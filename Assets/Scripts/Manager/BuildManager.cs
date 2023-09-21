@@ -32,14 +32,16 @@ public class BuildManager : MonoBehaviour
     private GameObject goBuild;
     private SpriteRenderer sprTemp;
     private int key;
-    private ConectBuildDB cBuildDB;
+    private Conector conect;
     //private ConectResurcsDB cResDB;
 
 
     private void Start()
     {
         S = this;
-        cBuildDB = new ConectBuildDB();
+        GameObject connectorObject = GameObject.Find("Conector");
+        conect = connectorObject.AddComponent<Conector>(); 
+
         //cResDB = new ConectResurcsDB();
         dirBuild = new DirBuilder();
 
@@ -61,7 +63,7 @@ public class BuildManager : MonoBehaviour
         goBuild.transform.position = VereficGreed.greadBuilder.transform.position;
         sprTemp = goBuild.GetComponent<SpriteRenderer>();
         key = MakeKeyBuild();
-        cBuildDB.AddGOToGOBuildDic(key, goBuild);  
+        conect.AddGOToGOBuildDic(key, goBuild);  
         
 
         if(tempNameBuilder == "Office")
@@ -69,56 +71,49 @@ public class BuildManager : MonoBehaviour
             dirBuild.SetBuildBuilder(buildOffice);
             MakeBuild();
             sprTemp.sprite = office;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else if(tempNameBuilder == "Magazine")
         {
             dirBuild.SetBuildBuilder(buildMagazin);
             MakeBuild();
             sprTemp.sprite = magazin;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else if(tempNameBuilder == "Hause")
         {
             dirBuild.SetBuildBuilder(buildHause);
             MakeBuild();
             sprTemp.sprite = hause;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else if(tempNameBuilder == "Pole")
         {
             dirBuild.SetBuildBuilder(buildPole);
             MakeBuild();
             sprTemp.sprite = pole;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else if(tempNameBuilder == "Sinoval")
         {
             dirBuild.SetBuildBuilder(buildSinoval);
             MakeBuild();
             sprTemp.sprite = sinoval;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else if(tempNameBuilder == "Korovnik")
         {
             dirBuild.SetBuildBuilder(buildKorivnuk);
             MakeBuild();
             sprTemp.sprite = korovnik;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else if(tempNameBuilder == "Doilka")
         {
             dirBuild.SetBuildBuilder(buildMolocodoil);
             MakeBuild();
             sprTemp.sprite = doilnia;
-            ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-            ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+
         } 
         else Debug.Log("Сбой методу MakeGOBuild");
         tempNameBuilder ="";
@@ -127,8 +122,8 @@ public class BuildManager : MonoBehaviour
     public int MakeKeyBuild()
     {
         int key;
-        if(cBuildDB.InfoBuildsDBDic.Count == 0) key = 1;
-        else key = cBuildDB.InfoBuildsDBDic.Keys.Max() + 1;
+        if(conect.InfoBuildsDBDic.Count == 0) key = 1;
+        else key = conect.InfoBuildsDBDic.Keys.Max() + 1;
         return key;
     }
 
@@ -137,7 +132,10 @@ public class BuildManager : MonoBehaviour
         dirBuild.ConstructionBuild();
         build = dirBuild.GetBuild();
         build.name = build.name + key;
-        cBuildDB.AddBuildToBuildsDBDic(key,build);
+        conect.AddBuildToBuildsDBDic(key,build);
+        ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
+        ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
+        ResurcsManager.S.UtilizationOfResourcesForCurrentNeeds(build);
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 

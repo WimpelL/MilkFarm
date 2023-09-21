@@ -9,11 +9,11 @@ public class VereficGreed : MonoBehaviour
     public GameObject greadBuilderPrefab;  
     public static GameObject greadBuilder;
 
-    private Vector3 mousePosition, worldPosition;
+    private Vector3 mousePosition;
     private int mapSizeX;
     private int mapSizeY;
     private MaterialPropertyBlock _block;
-    private BuildingGread bG = new BuildingGread();
+    private BuildingGread bG;
     private string tempNameBuilder;
 
 
@@ -63,8 +63,8 @@ public class VereficGreed : MonoBehaviour
     {
         if(greadBuilder == null)
         { 
-            //if 'Builder' battum
             greadBuilder = Instantiate<GameObject>(greadBuilderPrefab);
+            bG =  greadBuilder.AddComponent<BuildingGread>();
             mousePosition = Input.mousePosition;
             mousePosition.z = 10.0f; // встановлюємо зміщення по осі Z для перетворення в координати світу
             greadBuilder.transform.position = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -142,6 +142,17 @@ public class VereficGreed : MonoBehaviour
                     }
                 }
                 
+            }
+        }
+        else if(Input.GetMouseButton(1))
+        {
+            Destroy(greadBuilder); 
+            for (int x1 = 0; x1 <= mapSizeX; x1++)
+            {
+                for (int y1 = 0; y1 <= mapSizeY; y1++)
+                {
+                    MakeGread.ArrPosGoOnMap[x1,y1].GetComponent<SpriteRenderer>().enabled = false;
+                }
             }
         }   
     }

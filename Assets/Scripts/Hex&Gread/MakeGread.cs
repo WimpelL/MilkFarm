@@ -13,7 +13,7 @@ public class MakeGread : MonoBehaviour
     public int mapSizeY = 10;
 
     private static int _mapSizeX;
-    private ConectHexDB cHexDB;
+    private Conector conect;
     public static int MapSizeX
     {
         get{return _mapSizeX;}
@@ -38,7 +38,8 @@ public class MakeGread : MonoBehaviour
 
     private void Awake()
     {
-        cHexDB = new ConectHexDB();
+        GameObject connectorObject = GameObject.Find("Conector");
+        conect = connectorObject.AddComponent<Conector>();
         _mapSizeX = mapSizeX;
         _mapSizeY = mapSizeY;
 
@@ -72,7 +73,7 @@ public class MakeGread : MonoBehaviour
         ht.posOnMap = pos;
         ht.posGoOnMapX = x;
         ht.posGoOnMapY = y;
-        cHexDB.AddHexToTileDB(ht,x,y);
+        conect.AddHexToTileDB(ht,x,y);
         
     }
 }

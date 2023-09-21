@@ -17,10 +17,10 @@ public class Molocodoil : BuildBuilder
         Build.storageResursProduct = 3;
         Build.resursNeedDic = new Dictionary<Res, int>
         {
-            { Res.gold, -1 }  , 
-            { Res.piple,-1 }  ,
-            { Res.power,-1 }  ,
-            { Res.cow,  -1 }  
+            { Res.gold,  1 }  , 
+            { Res.piple, 1 }  ,
+            { Res.power, 1 }  ,
+            { Res.cow,   1 }  
         };
         Build.name = "Molocodoilka";
     }

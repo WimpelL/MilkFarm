@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildingGread
+public class BuildingGread : MonoBehaviour
 {
     HexTile [] buildChild;
-    ConectHexDB cHexDB = new ConectHexDB();
+    Conector conect;
+    GameObject connectorObject;
+    
     public  HexTile [] HexSeven(int x,int y)
     {
+        connectorObject = GameObject.Find("Conector");
+        conect = connectorObject.AddComponent<Conector>();
+
         HexTile [] buildChild;
         if(x % 2 == 0)
         {
@@ -44,7 +49,7 @@ public class BuildingGread
     private HexTile Vec (int x, int y)
     {
         Vector2Int vec = new Vector2Int(x,y);
-        return cHexDB.InfoHexagenTileDB[vec];
+        return conect.InfoHexagenTileDB[vec];
     }
 }
 

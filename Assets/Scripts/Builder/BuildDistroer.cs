@@ -13,14 +13,17 @@ public class BuildDistroer : MonoBehaviour
     private string goTemp;
     private string go = "";
     private MaterialPropertyBlock _block;
-    private ConectBuildDB cBuildDB;
-    private ConectHexDB cHexDB;
+    private Conector conect;
+    
 
     public void Start()
     {
         _block = new MaterialPropertyBlock();
-        cBuildDB = new ConectBuildDB();
-        cHexDB = new ConectHexDB();
+        
+        GameObject connectorObject = GameObject.Find("Conector");
+        conect = connectorObject.AddComponent<Conector>();
+
+        
     }
 
     public void Distroer()
@@ -82,18 +85,23 @@ public class BuildDistroer : MonoBehaviour
                 Destroy(disBuilder); 
             }
         }
+        if(Input.GetMouseButton(1))
+        {
+            Destroy(disBuilder); 
+            
+        }
     }
     private void DeleteBuild(int destroyKey)
     {
-        cBuildDB.RemoveBuildToBuildsDBDic(destroyKey);
-        GameObject gameObjectToRemove = cBuildDB.InfoGOBuildDBDic[destroyKey];
-        cBuildDB.RemoveGOToGOBuildDic(destroyKey);
+        conect.RemoveBuildToBuildsDBDic(destroyKey);
+        GameObject gameObjectToRemove = conect.InfoGOBuildDBDic[destroyKey];
+        conect.RemoveGOToGOBuildDic(destroyKey);
         Destroy(gameObjectToRemove);
 
     } 
     public HexTile [] SorchDBForKeyBuild(int key)
     {
-        var result = cHexDB.InfoHexagenTileDB.Values.Where( hex => hex.keyBuild == key).ToArray();
+        var result = conect.InfoHexagenTileDB.Values.Where( hex => hex.keyBuild == key).ToArray();
         return result;
     }
 }

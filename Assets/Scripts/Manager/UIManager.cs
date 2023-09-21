@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
 
     private GameObject panelUI = null;
     private UIPanel panel;
-    private ConectBuildDB cBuildDB = new ConectBuildDB();
+    private Conector conect;
 
     public void InicialUIReaction(HexTile hex)
     {
@@ -30,7 +30,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log(cBuildDB.InfoBuildsDBDic[hex.keyBuild].name);
+            Debug.Log(conect.InfoBuildsDBDic[hex.keyBuild].name);
             if(BuildDistroer.disBuilder == null)
             {
                 CreatePanelUI();
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
 
     public void LoadInfoPanelUIForBuild( HexTile hex)
     {
-        panel.panelTextName.text = cBuildDB.InfoBuildsDBDic[hex.keyBuild].name;
+        panel.panelTextName.text = conect.InfoBuildsDBDic[hex.keyBuild].name;
     }
 
     public void CreatePanelUI()
@@ -67,6 +67,10 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         S = this;
+
+        GameObject connectorObject = GameObject.Find("Conector");
+        conect = connectorObject.AddComponent<Conector>();
+        
         textPower.text = "енергії: " + ResurcsBD.ResurcesDic[Res.power];
         textPiple.text = "робітників: " + ResurcsBD.ResurcesDic[Res.piple];
         textGold.text = "грошей: " + ResurcsBD.ResurcesDic[Res.gold];

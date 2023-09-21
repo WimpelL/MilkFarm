@@ -14,8 +14,8 @@ public class Office : BuildBuilder
         Build.storageResursProduct = 10;
         Build.resursNeedDic = new Dictionary<Res, int>
         {
-            { Res.gold, -1 }, 
-            { Res.piple,-1 }
+            { Res.gold,  1 }, 
+            { Res.piple, 1 }
         };
         Build.name = "Office";
     }

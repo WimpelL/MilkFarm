@@ -15,10 +15,10 @@ class Korivnuk : BuildBuilder
         Build.storageResursProduct = 1;
         Build.resursNeedDic = new Dictionary<Res, int>
         {
-            { Res.gold,  -1 }  , 
-            { Res.piple, -1 }  ,
-            { Res.power, -1 }  ,
-            { Res.grass, -1 }  
+            { Res.gold,  1 }  , 
+            { Res.piple, 1 }  ,
+            { Res.power, 1 }  ,
+            { Res.hey,   1 }  
         };
         Build.name = "Korivnuk";
     }

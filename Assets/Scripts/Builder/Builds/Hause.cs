@@ -12,9 +12,9 @@ public class Hause : BuildBuilder
         Build.storageResursProduct = 10;
         Build.resursNeedDic = new Dictionary<Res, int>
         {
-            { Res.gold, -1 }, 
-            { Res.power,-1 },
-            { Res.milk,  -10 }  
+            { Res.gold,   1 }, 
+            { Res.power,  1 },
+            { Res.milk,  10 }  
         };
         Build.name = "Dim";
     }
