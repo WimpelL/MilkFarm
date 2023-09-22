@@ -25,38 +25,59 @@ public class VereficGreed : MonoBehaviour
     }
     public void BuildingOffice()
     {
-        tempNameBuilder = "Office";
-        MGB(); 
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Office";
+            MGB(); 
+        }
     }
     public void BuildingMagazine()
     {
-        tempNameBuilder = "Magazine";
-        MGB();
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Magazine";
+            MGB();
+        }
     }
     public void BuildingHause()
     {
-        tempNameBuilder = "Hause";
-        MGB();
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Hause";
+            MGB();
+        }
     }
     public void BuildingPole()
     {
-        tempNameBuilder = "Pole";
-        MGB();
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Pole";
+            MGB();
+        }
     }
     public void BuildingSinoval()
     {
-        tempNameBuilder = "Sinoval";
-        MGB();
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Sinoval";
+            MGB();
+        }
     }
     public void BuildingKorovnik()
     {
-        tempNameBuilder = "Korovnik";
-        MGB();
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Korovnik";
+            MGB();
+        }
     }
     public void BuildingDoilka()
     {
-        tempNameBuilder = "Doilka";
-        MGB();
+        if(ResurcsManager.S.ResursCvoteBuilder())
+        {
+            tempNameBuilder = "Doilka";
+            MGB();
+        }
     }
 
     public void MGB()

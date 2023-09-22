@@ -6,8 +6,6 @@ public class ResurcsManager : MonoBehaviour
 {
     public static ResurcsManager S;
 
-    //private ConectResurcsDB cResDB;
-    //private ConectBuildDB cBuildDB;
     private Conector conect;
 
     private void Start()
@@ -15,7 +13,6 @@ public class ResurcsManager : MonoBehaviour
         S = this;
         GameObject connectorObject = GameObject.Find("Conector");
         conect = connectorObject.AddComponent<Conector>(); 
-        //cBuildDB = new ConectBuildDB();
     }
     
     public void AddResWhileBuildingToResurcsBD(Build build)
@@ -28,10 +25,6 @@ public class ResurcsManager : MonoBehaviour
         conect.RemoveResToResurcsBD(Res.gold, build.cinaBuild);
         conect.RemoveResToResurcsBD(Res.power, 1);
         conect.RemoveResToResurcsBD(Res.piple, 1);
-        if( conect.InfoResurcesDic[Res.gold]  < 0 ||
-            conect.InfoResurcesDic[Res.power] < 0 ||
-            conect.InfoResurcesDic[Res.piple] < 0    )
-            Debug.Log("Будинок не збудувати");
     }
 
     public void UtilizationOfResourcesForCurrentNeeds(Build build)
@@ -41,6 +34,32 @@ public class ResurcsManager : MonoBehaviour
         {
             conect.RemoveResToResurcsBD(res.Key, res.Value);
         }
+    }
+
+    public bool ResursCvoteBuilder()
+    {
+        bool result = true;
+        if(conect.InfoResurcesDic[Res.gold] - 10 <= 0)
+        {
+            UIManager.S.ActiveMasageErrore("немає грошей");
+            Debug.Log("Немає грошей") ;
+            result = false;
+        }
+        else if(conect.InfoResurcesDic[Res.power] - 1 <= 0)
+        {
+            UIManager.S.ActiveMasageErrore("ви виснажені");
+            Debug.Log("Ви виснажені") ;
+            result = false;
+        }
+        else if(conect.InfoResurcesDic[Res.piple] - 1 <= 0)
+        {
+            UIManager.S.ActiveMasageErrore("нікому робити");
+            Debug.Log("Нікому робити") ;
+            result = false;
+        }
+
+        return result;
+
     }
 
     /*public void UtilizationOfResourcesForCurrentNeeds()

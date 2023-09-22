@@ -15,11 +15,18 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI textHey;
     public TextMeshProUGUI textCow;
     public TextMeshProUGUI textMilk;
+    public TextMeshProUGUI masageError;
+
     public Canvas canvas;
+
 
     private GameObject panelUI = null;
     private UIPanel panel;
     private Conector conect;
+    private float displayTime = 5f; // Час відображення повідомлення (у секундах)
+    private float fadeDuration = 1f; // Тривалість зникнення (у секундах)
+    private float elapsedTime = 0f; 
+    private bool isFading = false;
 
     public void InicialUIReaction(HexTile hex)
     {
@@ -61,9 +68,6 @@ public class UIManager : MonoBehaviour
         Destroy(panelUI);
     }
 
-
-
-
     void Start()
     {
         S = this;
@@ -78,6 +82,7 @@ public class UIManager : MonoBehaviour
         textHey.text = "сіна: " + ResurcsBD.ResurcesDic[Res.hey];
         textCow.text = "корів: " + ResurcsBD.ResurcesDic[Res.cow];
         textMilk.text = "молока: " + ResurcsBD.ResurcesDic[Res.milk];
+        masageError.gameObject.SetActive(false);
     }
 
 
@@ -90,6 +95,67 @@ public class UIManager : MonoBehaviour
         textHey.text = "сіна: " + ResurcsBD.ResurcesDic[Res.hey];
         textCow.text = "корів: " + ResurcsBD.ResurcesDic[Res.cow];
         textMilk.text = "молока: " + ResurcsBD.ResurcesDic[Res.milk];
+        MethodMasageErrore();
         
+    }
+
+    public void ActiveMasageErrore(string mesage)
+    {
+        masageError.gameObject.SetActive(true);
+        masageError.alpha = 1f;
+        masageError.text = mesage;
+        displayTime = 5f; 
+        fadeDuration = 1f; 
+        elapsedTime = 0f; 
+        isFading = false;
+    }   
+
+    private void MethodMasageErrore()
+    {
+        if(masageError.gameObject.activeSelf)
+        {
+            if (!isFading)
+            {
+                // Зачекайте displayTime секунд перед початком зникнення
+                if (elapsedTime < displayTime)
+                {
+                    elapsedTime += Time.deltaTime;
+                }
+                else
+                {
+                    isFading = true;
+                }
+            }
+            else
+            {
+                // Зменшуйте прозорість тексту протягом fadeDuration секунд
+                if (masageError.alpha > 0)
+                {
+                    float alphaChange = Time.deltaTime / fadeDuration;
+                    masageError.alpha -= alphaChange;
+                }
+                else
+                {
+                    // По завершенні зникнення відключіть текст і видаліть гейм об'єкт
+                    masageError.gameObject.SetActive(false);
+                }
+            }
+        }
+
+
+
+        
+
+        
+        
+
+        
+
+        
+        
+
+    
+
+
     }
 }

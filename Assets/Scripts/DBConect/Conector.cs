@@ -50,7 +50,7 @@ public class Conector : MonoBehaviour
     {
         ResurcsBD.ResurcesDic[res] -= quantity;
     }
-    public Dictionary<Res,float> InfoResurcesDic
+    public Dictionary<Res,int> InfoResurcesDic
     {
         get{return  ResurcsBD.ResurcesDic;}
     }
