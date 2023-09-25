@@ -14,44 +14,46 @@ public class ResurcsManager : MonoBehaviour
         GameObject connectorObject = GameObject.Find("Conector");
         conect = connectorObject.AddComponent<Conector>(); 
     }
-    
-    public void AddResWhileBuildingToResurcsBD(Build build)
-    {
-        conect.AddResToResurcsBD(build.resursProduct, build.storageResursProduct);
-    }
 
-    public void RemoveWhileBuildingResToResurcsBD(Build build)
+    public void CapitalCostsOfResourcesForConstruction(Build build)
     {
+        //Капітальні витрати ресурсів на будівництво
         conect.RemoveResToResurcsBD(Res.gold, build.cinaBuild);
         conect.RemoveResToResurcsBD(Res.power, 1);
         conect.RemoveResToResurcsBD(Res.piple, 1);
+        
     }
 
-    public void UtilizationOfResourcesForCurrentNeeds(Build build)
+    public void CurrentReceiptsOfResources(Build build)
     {
-        //Використання ресурсу на поточні потреби
+        //Поточні надходження ресурсів
+        conect.AddResToResurcsBD(build.resursProduct, build.storageResursProduct);
+        //Поточні витрати ресурсів
         foreach (var res in build.resursNeedDic)
         {
             conect.RemoveResToResurcsBD(res.Key, res.Value);
         }
+
+
+
     }
 
     public bool ResursCvoteBuilder()
     {
         bool result = true;
-        if(conect.InfoResurcesDic[Res.gold] - 10 <= 0)
+        if(conect.InfoResurcesDic[Res.gold] - 10 < 0)
         {
             UIManager.S.ActiveMasageErrore("немає грошей");
             Debug.Log("Немає грошей") ;
             result = false;
         }
-        else if(conect.InfoResurcesDic[Res.power] - 1 <= 0)
+        else if(conect.InfoResurcesDic[Res.power] - 1 < 0)
         {
             UIManager.S.ActiveMasageErrore("ви виснажені");
             Debug.Log("Ви виснажені") ;
             result = false;
         }
-        else if(conect.InfoResurcesDic[Res.piple] - 1 <= 0)
+        else if(conect.InfoResurcesDic[Res.piple] - 1 < 0)
         {
             UIManager.S.ActiveMasageErrore("нікому робити");
             Debug.Log("Нікому робити") ;
@@ -61,17 +63,5 @@ public class ResurcsManager : MonoBehaviour
         return result;
 
     }
-
-    /*public void UtilizationOfResourcesForCurrentNeeds()
-    {
-        //Використання ресурсу на поточні потреби
-        foreach (var build in cBuildDB.InfoBuildsDBDic)
-        {
-            foreach (var res in build.Value.resursNeedDic)
-            {
-                cResDB.RemoveResToResurcsBD(res.Key, res.Value);
-            }
-        }
-    }*/
 
 }

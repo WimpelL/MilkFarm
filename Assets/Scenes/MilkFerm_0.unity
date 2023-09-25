@@ -5295,7 +5295,7 @@ GameObject:
   - component: {fileID: 2102441827}
   - component: {fileID: 2102441826}
   m_Layer: 5
-  m_Name: Next
+  m_Name: NextWeek
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5366,9 +5366,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 534436484}
-        m_TargetAssemblyTypeName: BuildDistroer, Assembly-CSharp
-        m_MethodName: Distroer
+      - m_Target: {fileID: 534436480}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GoToNextWeek
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

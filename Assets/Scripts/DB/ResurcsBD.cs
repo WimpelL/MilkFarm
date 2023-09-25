@@ -7,7 +7,7 @@ public class ResurcsBD : MonoBehaviour
     private static  Dictionary<Res,int> _resurcesDic = new Dictionary<Res, int>()
         {
             [Res.power] = 2,
-            [Res.piple] = 4,
+            [Res.piple] = 2,
             [Res.gold]  = 100,
             [Res.grass] = 0,
             [Res.hey]   = 0,

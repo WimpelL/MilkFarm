@@ -133,9 +133,9 @@ public class BuildManager : MonoBehaviour
         build = dirBuild.GetBuild();
         build.name = build.name + key;
         conect.AddBuildToBuildsDBDic(key,build);
-        ResurcsManager.S.AddResWhileBuildingToResurcsBD(build);
-        ResurcsManager.S.RemoveWhileBuildingResToResurcsBD(build);
-        ResurcsManager.S.UtilizationOfResourcesForCurrentNeeds(build);
+        
+        ResurcsManager.S.CapitalCostsOfResourcesForConstruction(build);
+        
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 

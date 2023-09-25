@@ -16,7 +16,7 @@ public class Magazin : BuildBuilder
         {
             { Res.piple,  1 }  ,
             { Res.power,  1 }  ,
-            { Res.milk,   1 }  
+            { Res.gold,   1 }  
         };
         Build.name = "Magazin";
     }

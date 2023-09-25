@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static GameManager S;
+
+    private Conector conect;
+
+    private void Start()
     {
-        
+        S = this;
+        GameObject connectorObject = GameObject.Find("Conector");
+        conect = connectorObject.AddComponent<Conector>(); 
+    }
+
+    public void GoToNextWeek()
+    {
+        conect.ResToResurcsBD(Res.power,2);
+        conect.ResToResurcsBD(Res.piple,2);
+        foreach (var build in conect.InfoBuildsDBDic)
+        {
+            ResurcsManager.S.CurrentReceiptsOfResources(build.Value);
+        }
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -15,7 +15,8 @@ public class Office : BuildBuilder
         Build.resursNeedDic = new Dictionary<Res, int>
         {
             { Res.gold,  1 }, 
-            { Res.piple, 1 }
+            { Res.piple, 1 },
+            { Res.power, 1 }
         };
         Build.name = "Office";
     }

@@ -49,6 +49,10 @@ public class Conector : MonoBehaviour
     public void RemoveResToResurcsBD(Res res, int quantity)
     {
         ResurcsBD.ResurcesDic[res] -= quantity;
+    }    
+    public void ResToResurcsBD(Res res, int quantity)
+    {
+        ResurcsBD.ResurcesDic[res] = quantity;
     }
     public Dictionary<Res,int> InfoResurcesDic
     {
