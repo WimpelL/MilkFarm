@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
         {
             ResurcsManager.S.CurrentReceiptsOfResources(build.Value);
         }
+        ResurcsManager.S.ObnulenniaResurcesTempDic();       
+        ResurcsManager.S.ZanesenniaResurcesTempDic();
+
         
     }
 

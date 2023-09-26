@@ -133,8 +133,9 @@ public class BuildManager : MonoBehaviour
         build = dirBuild.GetBuild();
         build.name = build.name + key;
         conect.AddBuildToBuildsDBDic(key,build);
-        
-        ResurcsManager.S.CapitalCostsOfResourcesForConstruction(build);
+
+        ResurcsManager.S.CostsResourcesForBuilding(build);
+        //ResurcsManager.S.CurrentReceiptsOfResources(build);
         
     }
 

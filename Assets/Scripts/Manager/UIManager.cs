@@ -7,7 +7,12 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager S;
 
+
     public GameObject panelUIPrefab;
+    public TextMeshProUGUI masageError;
+    public Canvas canvas;
+
+    [Header("Text for resurce")]   
     public TextMeshProUGUI textPower;
     public TextMeshProUGUI textPiple;
     public TextMeshProUGUI textGold;
@@ -15,9 +20,16 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI textHey;
     public TextMeshProUGUI textCow;
     public TextMeshProUGUI textMilk;
-    public TextMeshProUGUI masageError;
 
-    public Canvas canvas;
+    [Header("Text for Cost resurce")]   
+    public TextMeshProUGUI textCostPower;
+    public TextMeshProUGUI textCostPiple;
+    public TextMeshProUGUI textCostGold;
+    public TextMeshProUGUI textCostGrass;
+    public TextMeshProUGUI textCostHey;
+    public TextMeshProUGUI textCostCow;
+    public TextMeshProUGUI textCostMilk;
+
 
 
     private GameObject panelUI = null;
@@ -75,27 +87,57 @@ public class UIManager : MonoBehaviour
         GameObject connectorObject = GameObject.Find("Conector");
         conect = connectorObject.AddComponent<Conector>();
         
-        textPower.text = "енергії: " + ResurcsBD.ResurcesDic[Res.power];
-        textPiple.text = "робітників: " + ResurcsBD.ResurcesDic[Res.piple];
-        textGold.text = "грошей: " + ResurcsBD.ResurcesDic[Res.gold];
-        textGrass.text = "трави: " + ResurcsBD.ResurcesDic[Res.grass];
-        textHey.text = "сіна: " + ResurcsBD.ResurcesDic[Res.hey];
-        textCow.text = "корів: " + ResurcsBD.ResurcesDic[Res.cow];
-        textMilk.text = "молока: " + ResurcsBD.ResurcesDic[Res.milk];
+        textPower.text = "енергії: " + conect.InfoResurcesDic[Res.power];
+        textPiple.text = "робітників: " + conect.InfoResurcesDic[Res.piple];
+        textGold.text = "грошей: " + conect.InfoResurcesDic[Res.gold];
+        textGrass.text = "трави: " + conect.InfoResurcesDic[Res.grass];
+        textHey.text = "сіна: " + conect.InfoResurcesDic[Res.hey];
+        textCow.text = "корів: " + conect.InfoResurcesDic[Res.cow];
+        textMilk.text = "молока: " + conect.InfoResurcesDic[Res.milk];
         masageError.gameObject.SetActive(false);
+
+        /*textCostPower.text = conect.InfoResurcesDic[Res.power]
+            + "( " + ResurcsManager.S.resurcesTempDic[Res.power] + " )";
+        textCostPiple.text = conect.InfoResurcesDic[Res.piple]
+            + "( " +ResurcsManager.S.resurcesTempDic[Res.piple] + " )";
+        textCostGold.text = conect.InfoResurcesDic[Res.gold] 
+            + "( "+ResurcsManager.S.resurcesTempDic[Res.gold] + " )";
+        textCostGrass.text = conect.InfoResurcesDic[Res.grass]
+            + "( "+ResurcsManager.S.resurcesTempDic[Res.grass] + " )";
+        textCostHey.text = conect.InfoResurcesDic[Res.hey]
+            + "( "+ResurcsManager.S.resurcesTempDic[Res.hey] + " )";
+        textCostCow.text = conect.InfoResurcesDic[Res.cow]
+            + "( "+ResurcsManager.S.resurcesTempDic[Res.cow] + " )";
+        textCostMilk.text = conect.InfoResurcesDic[Res.milk]
+            + "( "+ResurcsManager.S.resurcesTempDic[Res.milk] + " )";*/
+
     }
 
 
     void Update()
     {
-        textPower.text = "енергії: " + ResurcsBD.ResurcesDic[Res.power];
-        textPiple.text = "робітників: " + ResurcsBD.ResurcesDic[Res.piple];
-        textGold.text = "грошей: " + ResurcsBD.ResurcesDic[Res.gold];
-        textGrass.text = "трави: " + ResurcsBD.ResurcesDic[Res.grass];
-        textHey.text = "сіна: " + ResurcsBD.ResurcesDic[Res.hey];
-        textCow.text = "корів: " + ResurcsBD.ResurcesDic[Res.cow];
-        textMilk.text = "молока: " + ResurcsBD.ResurcesDic[Res.milk];
+        textPower.text = "енергії: " + conect.InfoResurcesDic[Res.power];
+        textPiple.text = "робітників: " + conect.InfoResurcesDic[Res.piple];
+        textGold.text = "грошей: " + conect.InfoResurcesDic[Res.gold];
+        textGrass.text = "трави: " + conect.InfoResurcesDic[Res.grass];
+        textHey.text = "сіна: " + conect.InfoResurcesDic[Res.hey];
+        textCow.text = "корів: " + conect.InfoResurcesDic[Res.cow];
+        textMilk.text = "молока: " + conect.InfoResurcesDic[Res.milk];
         MethodMasageErrore();
+        textCostPower.text = ResurcsManager.S.ResTempDicAdd[Res.power]
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.power] + " )";
+        textCostPiple.text = ResurcsManager.S.ResTempDicAdd[Res.piple]
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.piple] + " )";
+        textCostGold.text = ResurcsManager.S.ResTempDicAdd[Res.gold] 
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.gold] + " )";
+        textCostGrass.text = ResurcsManager.S.ResTempDicAdd[Res.grass]
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.grass] + " )";
+        textCostHey.text = ResurcsManager.S.ResTempDicAdd[Res.hey]
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.hey] + " )";
+        textCostCow.text = ResurcsManager.S.ResTempDicAdd[Res.cow]
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.cow] + " )";
+        textCostMilk.text = ResurcsManager.S.ResTempDicAdd[Res.milk]
+            + "( -" + ResurcsManager.S.ResTempDicRemove[Res.milk] + " )";
         
     }
 

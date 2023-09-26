@@ -14,6 +14,7 @@ public class Hause : BuildBuilder
         {
             { Res.gold,   1 }, 
             { Res.power,  1 },
+            { Res.piple,  1 },
             { Res.milk,  10 }  
         };
         Build.name = "Dim";
