@@ -17,14 +17,12 @@ public class GameManager : MonoBehaviour
 
     public void GoToNextWeek()
     {
-        conect.ResToResurcsBD(Res.power,2);
-        conect.ResToResurcsBD(Res.piple,2);
-        foreach (var build in conect.InfoBuildsDBDic)
+        if(ResurcsManager.S.ResursCvoteInNextWek())
         {
-            ResurcsManager.S.CurrentReceiptsOfResources(build.Value);
+            ResurcsManager.S.toNextWekResursInDB();
+            ResurcsManager.S.toNextWekResursTempDic(); 
         }
-        ResurcsManager.S.ObnulenniaResurcesTempDic();       
-        ResurcsManager.S.ZanesenniaResurcesTempDic();
+
 
         
     }

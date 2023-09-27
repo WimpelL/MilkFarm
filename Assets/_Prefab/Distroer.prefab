@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1837090311313693399}
   - component: {fileID: 1837090311313693398}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Distroer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,6 +16,7 @@ public class Build
     public int storageResursProduct = 0;
     public Dictionary<Res,int> resursNeedDic = new Dictionary<Res, int>();
     public string name;
+    public bool work = true;
 }
 
 

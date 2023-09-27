@@ -6,6 +6,8 @@ public class ResurcsManager : MonoBehaviour
 {
     public static ResurcsManager S;
 
+    public int pipleBaza = 2;
+
 
     public Dictionary<Res,int> ResTempDicRemove,ResTempDicAdd;
     
@@ -23,13 +25,14 @@ public class ResurcsManager : MonoBehaviour
         };
         ResTempDicAdd = new Dictionary<Res, int>()
         {
-            [Res.power] = 2,[Res.piple] = 2,[Res.gold]  = 0,[Res.grass] = 0,
+            [Res.power] = pipleBaza,[Res.piple] = pipleBaza,[Res.gold]  = 0,[Res.grass] = 0,
             [Res.hey]   = 0,[Res.cow]   = 0,[Res.milk]  = 0,
         };
     }
-    // обнулення темпового словника
-    public void ObnulenniaResurcesTempDic()
+
+    public void toNextWekResursTempDic()
     {
+        // обнулення темпового словника
         foreach (var res in ResTempDicRemove)
         {
             ResTempDicAdd[res.Key] = 0;
@@ -38,37 +41,59 @@ public class ResurcsManager : MonoBehaviour
         {
             ResTempDicRemove[res.Key] = 0;
         }
-    }
-    // Занесення в темповий словник витрати минулого тижня
-    public void ZanesenniaResurcesTempDic()
-    {
+        // Занесення в темповий словник витрати минулого тижня     
+        ResTempDicAdd[Res.power] += pipleBaza;
+        ResTempDicAdd[Res.piple] += pipleBaza;          
         foreach (var build in conect.InfoBuildsDBDic)
         {
-            foreach (var res in build.Value.resursNeedDic)
+            if(build.Value.work)
             {
-                ResTempDicRemove[res.Key] += res.Value;
+                foreach (var res in build.Value.resursNeedDic)
+                {
+                    ResTempDicRemove[res.Key] += res.Value;
+                }
+                ResTempDicAdd[build.Value.resursProduct] += build.Value.storageResursProduct;                
             }
-            ResTempDicAdd[build.Value.resursProduct] += build.Value.storageResursProduct;
+
         }
-        ResTempDicAdd[Res.power] += 2;
-        ResTempDicAdd[Res.piple] += 2;
+
     }
 
 
 
+    public void toNextWekResursInDB()
+    {
+        conect.ResToResurcsBD(Res.power,pipleBaza);
+        conect.ResToResurcsBD(Res.piple,pipleBaza);
+        foreach (var build in conect.InfoBuildsDBDic)
+        {
+            if(build.Value.work)
+            {
+                //Поточні надходження ресурсів
+                foreach (var res in build.Value.resursNeedDic)
+                {
+                conect.RemoveResToResurcsBD(res.Key, res.Value);
+                }
+                //Поточні витрати ресурсів
+                conect.AddResToResurcsBD(build.Value.resursProduct, build.Value.storageResursProduct);
+            }
 
+        }
+
+
+    }
 
 
     public void CostsResourcesForBuilding(Build build)
     {
-        //Капітальні витрати ресурсів на будівництво
+        //Капітальні витрати ресурсів на будівництво в БД
         conect.RemoveResToResurcsBD(Res.gold, build.cinaBuild);
-        ResTempDicRemove[Res.gold] += build.cinaBuild;
-
         conect.RemoveResToResurcsBD(Res.power, 1);
-        ResTempDicRemove[Res.power] += 1;
-
         conect.RemoveResToResurcsBD(Res.piple, 1);
+
+        //Капітальні витрати ресурсів на будівництво в in Temp
+        ResTempDicRemove[Res.gold] += build.cinaBuild;
+        ResTempDicRemove[Res.power] += 1;
         ResTempDicRemove[Res.piple] += 1;
 
         //Поточні витрати ресурсів in Temp
@@ -76,48 +101,60 @@ public class ResurcsManager : MonoBehaviour
         {
             ResTempDicRemove[res.Key] += res.Value;
         }
+        if( build.resursProduct != Res.gold &&
+            build.resursProduct != Res.power &&
+            build.resursProduct != Res.piple )
         ResTempDicAdd[build.resursProduct] += build.storageResursProduct;
         
     }
 
-    public void CurrentReceiptsOfResources(Build build)
-    {
-        //Поточні надходження ресурсів
-        conect.AddResToResurcsBD(build.resursProduct, build.storageResursProduct);
-        //Поточні витрати ресурсів
-        foreach (var res in build.resursNeedDic)
-        {
-            conect.RemoveResToResurcsBD(res.Key, res.Value);
-        }
-    }
-    //Розробити верифікацію
+    //верифікація ходу
 
     public bool ResursCvoteBuilder()
     {
         bool result = true;
-        if(conect.InfoResurcesDic[Res.gold] - ResTempDicRemove[Res.gold] <= 0)
+        if(conect.InfoResurcesDic[Res.gold] <= 0)
         {
             UIManager.S.ActiveMasageErrore("немає грошей");
             Debug.Log("Немає грошей") ;
             result = false;
         }
-        else if(ResTempDicAdd[Res.power] - ResTempDicRemove[Res.power] < 0
-        && conect.InfoResurcesDic[Res.power] - ResTempDicRemove[Res.power] < 0)
+        else if(conect.InfoResurcesDic[Res.power] <= 0)
         {
             UIManager.S.ActiveMasageErrore("ви виснажені");
             Debug.Log("Ви виснажені") ;
             result = false;
         }
-        else if(ResTempDicAdd[Res.piple] - ResTempDicRemove[Res.piple] < 0
-        && conect.InfoResurcesDic[Res.piple] - ResTempDicRemove[Res.piple] < 0)
+        else if(conect.InfoResurcesDic[Res.piple] <= 0)
         {
             UIManager.S.ActiveMasageErrore("нікому робити");
             Debug.Log("Нікому робити") ;
             result = false;
         }
-
         return result;
-
     }
-
+    //верифікація будівництва
+    public bool ResursCvoteInNextWek()
+    {
+        bool result = true;
+        /*if(ResTempDicAdd[Res.gold] <= ResTempDicRemove[Res.gold])
+        {
+            UIManager.S.ActiveMasageErrore("немає грошей. вимкніть будинки");
+            Debug.Log("Немає грошей") ;
+            result = false;
+        }*/
+        if(ResTempDicAdd[Res.power] < ResTempDicRemove[Res.power])
+        {
+            UIManager.S.ActiveMasageErrore("ви виснажені. вимкніть будинки ");
+            Debug.Log("Ви виснажені") ;
+            result = false;
+        }
+        else if(ResTempDicAdd[Res.piple] < ResTempDicRemove[Res.piple])
+        {
+            UIManager.S.ActiveMasageErrore("нікому робити. вимкніть будинки");
+            Debug.Log("Нікому робити") ;
+            result = false;
+        }
+        return result;
+    }
 }

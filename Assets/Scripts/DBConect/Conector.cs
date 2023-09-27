@@ -31,6 +31,15 @@ public class Conector : MonoBehaviour
     {
         BuildDB.GOBuildDBDic.Remove(destroyKey);
     }
+    public void StopBuildinDB(int key)
+    {
+        BuildDB.BuildsDBDic[key].work = false;
+    }
+    public void PlayBuildinDB(int key)
+    {
+        BuildDB.BuildsDBDic[key].work = true;
+    }
+
     // Conect to Data Base "HexDB"
     public void AddHexToTileDB (HexTile hexSave, int x, int y)
     {
