@@ -52,7 +52,9 @@ public class ResurcsManager : MonoBehaviour
                 {
                     ResTempDicRemove[res.Key] += res.Value;
                 }
-                ResTempDicAdd[build.Value.resursProduct] += build.Value.storageResursProduct;                
+                ResTempDicAdd[build.Value.resursProduct] +=
+                build.Value.storageResursProduct * build.Value.oborud;
+                               
             }
 
         }
@@ -75,7 +77,8 @@ public class ResurcsManager : MonoBehaviour
                 conect.RemoveResToResurcsBD(res.Key, res.Value);
                 }
                 //Поточні витрати ресурсів
-                conect.AddResToResurcsBD(build.Value.resursProduct, build.Value.storageResursProduct);
+
+                conect.AddResToResurcsBD(build.Value.resursProduct, build.Value.storageResursProduct * build.Value.oborud);
             }
 
         }

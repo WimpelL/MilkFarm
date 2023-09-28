@@ -41,7 +41,11 @@ public class BuildDistroer : MonoBehaviour
         disVariant = "Pley";
         Distroer();
     }
-
+    public void DisGear()
+    {
+        disVariant = "Gear";
+        Distroer();
+    }
 
     public void Distroer()
     {
@@ -76,10 +80,28 @@ public class BuildDistroer : MonoBehaviour
                 if( disVariant == "Delete" ) Replace();
                 if( disVariant == "Stop" ) StopBuild();
                 if( disVariant == "Pley" ) PlayBuild();
+                if( disVariant == "Gear" ) addGear();
 
             }
         }
     } 
+    private void addGear()
+    {
+        if(Input.GetMouseButton(0))
+        {
+            if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
+            {
+                BuildManager.S.AddGear(conect.InfoBuildsDBDic[RaycastCamera.HehTileSelected.keyBuild]);
+                disVariant = "";        
+                // знищення дистроїра
+                Destroy(disBuilder); 
+            }
+        }
+        if(Input.GetMouseButton(1))
+        {
+            Destroy(disBuilder); 
+        }
+    }
     private void StopBuild()
     {
         if(Input.GetMouseButton(0))

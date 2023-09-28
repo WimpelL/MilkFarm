@@ -9,7 +9,7 @@ public class BuildManager : MonoBehaviour
 
     public static BuildManager S;
 
-    [Header("Setting")]
+    [Header("Setting sprite Hause")]
     public Sprite office;
     public Sprite magazin;
     public Sprite hause;
@@ -17,7 +17,16 @@ public class BuildManager : MonoBehaviour
     public Sprite sinoval;
     public Sprite korovnik;
     public Sprite doilnia;
+
+    [Header("Setting sprite Gear")]
+    public Sprite gearPoleSprite;
+    public Sprite gearSinovalSprite;
+    public Sprite gearKorovnikSprite;
+    public Sprite gearDoilniaSprite;
+
+    [Header("Setting sprite prefabHause")]
     public GameObject prefabHause;
+    public GameObject prefabGear;
 
     private Build build;   
     private Korivnuk buildKorivnuk;
@@ -33,7 +42,7 @@ public class BuildManager : MonoBehaviour
     private SpriteRenderer sprTemp;
     private int key;
     private Conector conect;
-    //private ConectResurcsDB cResDB;
+    private GameObject goGear;
 
 
     private void Start()
@@ -42,7 +51,6 @@ public class BuildManager : MonoBehaviour
         GameObject connectorObject = GameObject.Find("Conector");
         conect = connectorObject.AddComponent<Conector>(); 
 
-        //cResDB = new ConectResurcsDB();
         dirBuild = new DirBuilder();
 
         buildOffice = new Office();
@@ -133,9 +141,7 @@ public class BuildManager : MonoBehaviour
         build = dirBuild.GetBuild();
         build.name = build.name + key;
         conect.AddBuildToBuildsDBDic(key,build);
-
         ResurcsManager.S.CostsResourcesForBuilding(build);
-        //ResurcsManager.S.CurrentReceiptsOfResources(build);
         
     }
 
@@ -144,4 +150,37 @@ public class BuildManager : MonoBehaviour
         hex.keyBuild = key; 
     }
 
+    public void AddGear(Build build)
+    {
+        if(build.oborud <= build.maxOborud)
+        {
+            Debug.Log("Test1");
+            build.oborud += 1;
+            conect.RemoveResToResurcsBD(Res.gold, build.cinaOborud);
+            goGear = goBuild = Instantiate(prefabGear) as GameObject;
+            int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;
+            goGear.transform.position = RandomVec (conect.InfoGOBuildDBDic[keyT].transform.position);
+            sprTemp = goGear.GetComponent<SpriteRenderer>();
+            if(build.name.StartsWith("Pole")) sprTemp.sprite = gearPoleSprite;
+            else if(build.name.StartsWith("Sinoval")) sprTemp.sprite = gearSinovalSprite;
+            else if(build.name.StartsWith("Korivnuk")) sprTemp.sprite = gearKorovnikSprite;
+            else if(build.name.StartsWith("Molocodoilka")) sprTemp.sprite = gearDoilniaSprite;
+            else  Debug.Log("AddGear.build.name.StartsWith problem");
+
+        }
+        else
+        {
+            Debug.Log("Max oborud");
+        }
+
+
+    }
+    private Vector3 RandomVec (Vector3 vector3)
+    {
+        var offset = Random.insideUnitCircle * Random.Range(0.1f,1f);
+        //offset = offset.normalized;
+        var vec2 = offset + Random.insideUnitCircle;
+        vector3 = new Vector3(vector3.x + vec2.x, vector3.y + vec2.y, -1f);
+        return vector3; 
+    }
 }
