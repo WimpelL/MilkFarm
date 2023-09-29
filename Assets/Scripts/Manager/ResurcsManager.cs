@@ -50,7 +50,7 @@ public class ResurcsManager : MonoBehaviour
             {
                 foreach (var res in build.Value.resursNeedDic)
                 {
-                    ResTempDicRemove[res.Key] += res.Value;
+                    ResTempDicRemove[res.Key] += res.Value * build.Value.oborud;
                 }
                 ResTempDicAdd[build.Value.resursProduct] +=
                 build.Value.storageResursProduct * build.Value.oborud;
@@ -61,8 +61,6 @@ public class ResurcsManager : MonoBehaviour
 
     }
 
-
-
     public void toNextWekResursInDB()
     {
         conect.ResToResurcsBD(Res.power,pipleBaza);
@@ -71,23 +69,20 @@ public class ResurcsManager : MonoBehaviour
         {
             if(build.Value.work)
             {
-                //Поточні надходження ресурсів
+                //Поточні витрати ресурсів
                 foreach (var res in build.Value.resursNeedDic)
                 {
-                conect.RemoveResToResurcsBD(res.Key, res.Value);
+                    conect.RemoveResToResurcsBD(res.Key, res.Value * build.Value.oborud);
                 }
-                //Поточні витрати ресурсів
-
-                conect.AddResToResurcsBD(build.Value.resursProduct, build.Value.storageResursProduct * build.Value.oborud);
+                //Поточні надходження ресурсів
+                conect.AddResToResurcsBD(build.Value.resursProduct,
+                 build.Value.storageResursProduct * build.Value.oborud);
             }
-
         }
-
-
     }
 
 
-    public void CostsResourcesForBuilding(Build build)
+    public void ResourcesForBuilding(Build build)
     {
         //Капітальні витрати ресурсів на будівництво в БД
         conect.RemoveResToResurcsBD(Res.gold, build.cinaBuild);
@@ -95,7 +90,7 @@ public class ResurcsManager : MonoBehaviour
         conect.RemoveResToResurcsBD(Res.piple, 1);
 
         //Капітальні витрати ресурсів на будівництво в in Temp
-        ResTempDicRemove[Res.gold] += build.cinaBuild;
+        ResTempDicRemove[Res.gold]  += build.cinaBuild;
         ResTempDicRemove[Res.power] += 1;
         ResTempDicRemove[Res.piple] += 1;
 
@@ -111,8 +106,41 @@ public class ResurcsManager : MonoBehaviour
         
     }
 
-    //верифікація ходу
+    public void ResurceForStopBuid()
+    {
+        ResTempDicRemove[Res.power] -= 1;
+        ResTempDicRemove[Res.piple] -= 1;
+        ResTempDicRemove[Res.gold]  += 1;
+    }
+    public void ResurceForPlayBuid()
+    {
+        ResTempDicRemove[Res.power] += 1;
+        ResTempDicRemove[Res.piple] += 1;
+        ResTempDicRemove[Res.gold] += 1; 
+    }
+    public void resurceForAddGear(Build build)
+    {
+        //Капітальні витрати ресурсів на будівництво в БД
+        conect.RemoveResToResurcsBD(Res.gold, build.cinaOborud);
+        conect.RemoveResToResurcsBD(Res.power, 1);
+        conect.RemoveResToResurcsBD(Res.piple, 1);
+        //Капітальні витрати ресурсів на будівництво в in Temp
+        ResTempDicRemove[Res.gold] +=  build.cinaOborud; 
+        ResTempDicRemove[Res.power] +=  1; 
+        ResTempDicRemove[Res.piple] +=  1; 
+        //Поточні витрати ресурсів in Temp
+        foreach (var res in build.resursNeedDic)
+        {
+            ResTempDicRemove[res.Key] += res.Value;
+        }
+        if( build.resursProduct != Res.gold &&
+            build.resursProduct != Res.power &&
+            build.resursProduct != Res.piple )
+        ResTempDicAdd[build.resursProduct] += build.storageResursProduct;
+    }
 
+
+    // верифікація будівництва
     public bool ResursCvoteBuilder()
     {
         bool result = true;
@@ -136,7 +164,8 @@ public class ResurcsManager : MonoBehaviour
         }
         return result;
     }
-    //верифікація будівництва
+
+    // верифікація ходу
     public bool ResursCvoteInNextWek()
     {
         bool result = true;

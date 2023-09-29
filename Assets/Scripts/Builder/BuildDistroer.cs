@@ -69,7 +69,6 @@ public class BuildDistroer : MonoBehaviour
                 if(goTemp != go)
                 {
                     disBuilder.transform.position = RaycastCamera.HexSelected.transform.position;
-
                     Color clr = RaycastCamera.HehTileSelected.statusType == EmployStatusType.none
                     ? Color.blue : Color.red;
                     _block.SetColor("_Color", clr);
@@ -92,8 +91,7 @@ public class BuildDistroer : MonoBehaviour
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
                 BuildManager.S.AddGear(conect.InfoBuildsDBDic[RaycastCamera.HehTileSelected.keyBuild]);
-                disVariant = "";        
-                // знищення дистроїра
+                disVariant = "";
                 Destroy(disBuilder); 
             }
         }
@@ -109,13 +107,8 @@ public class BuildDistroer : MonoBehaviour
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
                 // зупиняє будівлю
-                conect.StopBuildinDB(RaycastCamera.HehTileSelected.keyBuild);
-                ResurcsManager.S.ResTempDicRemove[Res.power] -= 1;
-                ResurcsManager.S.ResTempDicRemove[Res.piple] -= 1;
-                ResurcsManager.S.ResTempDicRemove[Res.gold] += 1;
-
-                disVariant = "";        
-                // знищення дистроїра
+                BuildManager.S.StopBuildinDB(conect.InfoBuildsDBDic[RaycastCamera.HehTileSelected.keyBuild]);
+                disVariant = "";
                 Destroy(disBuilder); 
             }
         }
@@ -130,13 +123,9 @@ public class BuildDistroer : MonoBehaviour
         {
             if(RaycastCamera.HehTileSelected.statusType != EmployStatusType.none)
             {
-                // зупиняє будівлю
-                conect.PlayBuildinDB(RaycastCamera.HehTileSelected.keyBuild);
-                ResurcsManager.S.ResTempDicRemove[Res.power] += 1;
-                ResurcsManager.S.ResTempDicRemove[Res.piple] += 1;
-                ResurcsManager.S.ResTempDicRemove[Res.gold] += 1;
-                disVariant = "";         
-                // знищення дистроїра
+                // стратує будівлю
+                BuildManager.S.PlayBuildinDB(conect.InfoBuildsDBDic[RaycastCamera.HehTileSelected.keyBuild]);
+                disVariant = "";
                 Destroy(disBuilder); 
             }
         }
@@ -155,7 +144,7 @@ public class BuildDistroer : MonoBehaviour
                 HexTile [] buildHex = SorchDBForKeyBuild(RaycastCamera.HehTileSelected.keyBuild);
                 Debug.Log(buildHex.Length);
                 // удалить буілд з БД i ГО буілд
-                DeleteBuild(RaycastCamera.HehTileSelected.keyBuild);                
+                BuildManager.S.DeleteBuild(RaycastCamera.HehTileSelected.keyBuild);                
                 // змінення хексів 
                 for (int i = 0; i < buildHex.Length; i++)
                 {
@@ -175,14 +164,7 @@ public class BuildDistroer : MonoBehaviour
             
         }
     }
-    private void DeleteBuild(int destroyKey)
-    {
-        conect.RemoveBuildToBuildsDBDic(destroyKey);
-        GameObject gameObjectToRemove = conect.InfoGOBuildDBDic[destroyKey];
-        conect.RemoveGOToGOBuildDic(destroyKey);
-        Destroy(gameObjectToRemove);
 
-    } 
     public HexTile [] SorchDBForKeyBuild(int key)
     {
         var result = conect.InfoHexagenTileDB.Values.Where( hex => hex.keyBuild == key).ToArray();

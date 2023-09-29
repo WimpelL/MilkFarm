@@ -24,9 +24,16 @@ public class BuildManager : MonoBehaviour
     public Sprite gearKorovnikSprite;
     public Sprite gearDoilniaSprite;
 
+    [Header("Setting sprite Stop/Play")]
+    public Sprite stopSpr;
+    public Sprite playSpr;
+
     [Header("Setting sprite prefabHause")]
     public GameObject prefabHause;
     public GameObject prefabGear;
+    public GameObject prefabStop;
+
+
 
     private Build build;   
     private Korivnuk buildKorivnuk;
@@ -43,6 +50,9 @@ public class BuildManager : MonoBehaviour
     private int key;
     private Conector conect;
     private GameObject goGear;
+    private GameObject goStop;
+    private Dictionary<int,GameObject> _goStopDic = new Dictionary<int, GameObject>();
+
 
 
     private void Start()
@@ -141,7 +151,7 @@ public class BuildManager : MonoBehaviour
         build = dirBuild.GetBuild();
         build.name = build.name + key;
         conect.AddBuildToBuildsDBDic(key,build);
-        ResurcsManager.S.CostsResourcesForBuilding(build);
+        ResurcsManager.S.ResourcesForBuilding(build);
         
     }
 
@@ -154,9 +164,11 @@ public class BuildManager : MonoBehaviour
     {
         if(build.oborud <= build.maxOborud)
         {
-            Debug.Log("Test1");
+            
             build.oborud += 1;
-            conect.RemoveResToResurcsBD(Res.gold, build.cinaOborud);
+
+            ResurcsManager.S.resurceForAddGear(build);
+
             goGear = goBuild = Instantiate(prefabGear) as GameObject;
             int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;
             goGear.transform.position = RandomVec (conect.InfoGOBuildDBDic[keyT].transform.position);
@@ -172,15 +184,59 @@ public class BuildManager : MonoBehaviour
         {
             Debug.Log("Max oborud");
         }
-
-
     }
     private Vector3 RandomVec (Vector3 vector3)
     {
-        var offset = Random.insideUnitCircle * Random.Range(0.1f,1f);
-        //offset = offset.normalized;
+        var offset = Random.insideUnitCircle * Random.Range(0.1f,0.3f);
+        offset = offset.normalized;
         var vec2 = offset + Random.insideUnitCircle;
         vector3 = new Vector3(vector3.x + vec2.x, vector3.y + vec2.y, -1f);
         return vector3; 
     }
+
+    public void StopBuildinDB(Build build)
+    {
+        if(build.work)
+        {
+            int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;
+            conect.StopBuildinDB(keyT);
+            ResurcsManager.S.ResurceForStopBuid();
+            Debug.Log("keyT " + keyT);
+            goStop = Instantiate(prefabStop) as GameObject;
+            Vector3 vect3SBT = conect.InfoGOBuildDBDic[keyT].transform.position;
+            vect3SBT.z = -1f;
+            goStop.transform.position = vect3SBT;
+            sprTemp = goStop.GetComponent<SpriteRenderer>();
+            sprTemp.sprite = stopSpr;
+            _goStopDic.Add(keyT,goStop);
+            
+        }
+    }
+    public void PlayBuildinDB (Build build)
+    {
+        if(!build.work)
+        {
+            int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;
+            conect.PlayBuildinDB(keyT);
+            ResurcsManager.S.ResurceForPlayBuid(); 
+
+            GameObject destroyGoStop = _goStopDic[keyT];
+            _goStopDic.Remove(keyT);
+            Destroy(destroyGoStop);
+        }
+    }
+    public void DeleteBuild(int destroyKey)
+    {
+        conect.RemoveBuildToBuildsDBDic(destroyKey);
+        GameObject gameObjectToRemove = conect.InfoGOBuildDBDic[destroyKey];
+        conect.RemoveGOToGOBuildDic(destroyKey);
+        Destroy(gameObjectToRemove);
+
+        if(_goStopDic[destroyKey] != null)
+        {
+            GameObject destroyGoStop = _goStopDic[destroyKey];
+            _goStopDic.Remove(destroyKey);
+            Destroy(destroyGoStop);
+        }
+    } 
 }
