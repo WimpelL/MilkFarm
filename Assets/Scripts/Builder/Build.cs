@@ -7,6 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public class Build 
 {
+    public string name;
     public int cinaBuild = 0;
     public int cinaOborud = 0;
     public int cinaRes = 0;
@@ -15,8 +16,8 @@ public class Build
     public Res resursProduct = Res.none;
     public int storageResursProduct = 0;
     public Dictionary<Res,int> resursNeedDic = new Dictionary<Res, int>();
-    public string name;
     public bool work = true;
+    public List<ResNead> resNeedDic = new List<ResNead>();
 }
 
 

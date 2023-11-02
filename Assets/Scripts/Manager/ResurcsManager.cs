@@ -13,6 +13,12 @@ public class ResurcsManager : MonoBehaviour
     
     private Conector conect;
 
+    private int _goldInWeak;
+    public int GoldInWeak
+    {
+        get{return _goldInWeak;}
+    }
+
     private void Start()
     {
         S = this;
@@ -41,6 +47,8 @@ public class ResurcsManager : MonoBehaviour
         {
             ResTempDicRemove[res.Key] = 0;
         }
+        //обнуление поточного золота
+        _goldInWeak = 0;
         // Занесення в темповий словник витрати минулого тижня     
         ResTempDicAdd[Res.power] += pipleBaza;
         ResTempDicAdd[Res.piple] += pipleBaza;          
@@ -51,8 +59,12 @@ public class ResurcsManager : MonoBehaviour
                 foreach (var res in build.Value.resursNeedDic)
                 {
                     ResTempDicRemove[res.Key] += res.Value * build.Value.oborud;
+                    if(res.Key == Res.gold) _goldInWeak -= res.Value;
                 }
                 ResTempDicAdd[build.Value.resursProduct] +=
+                build.Value.storageResursProduct * build.Value.oborud;
+                
+                if(build.Value.name.StartsWith("Magazin")) _goldInWeak +=
                 build.Value.storageResursProduct * build.Value.oborud;
                                
             }

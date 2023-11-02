@@ -30,6 +30,15 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI textCostCow;
     public TextMeshProUGUI textCostMilk;
 
+    [Header("Text for Info Menu")]   
+    public TextMeshProUGUI textFermStepOfGame;
+    public TextMeshProUGUI textManeyForStep;
+    public TextMeshProUGUI textManeyForLastStep;
+    public TextMeshProUGUI textCredit;
+    public TextMeshProUGUI textTax;
+    public TextMeshProUGUI textBuildExpenses;
+    public TextMeshProUGUI textResult;
+
 
 
     private GameObject panelUI = null;
@@ -44,12 +53,12 @@ public class UIManager : MonoBehaviour
     {
         if(hex.statusType == EmployStatusType.none) 
         {
-            Debug.Log("Non Build");
+            
             DeletePanelUI();
         }
         else
         {
-            Debug.Log(conect.InfoBuildsDBDic[hex.keyBuild].name);
+            
             if(BuildDistroer.disBuilder == null)
             {
                 CreatePanelUI();
@@ -57,23 +66,18 @@ public class UIManager : MonoBehaviour
             }
         }
     }
-
     public void LoadInfoPanelUIForBuild( HexTile hex)
     {
         panel.panelTextName.text = conect.InfoBuildsDBDic[hex.keyBuild].name;
     }
-
     public void CreatePanelUI()
     {
-
         if(panelUI == null)
         {
-            panelUI = Instantiate<GameObject>(panelUIPrefab, canvas.transform);
+            panelUI = Instantiate(panelUIPrefab, canvas.transform);
             panel = panelUI.GetComponent<UIPanel>();
         }
-
     }
-
     public void DeletePanelUI()
     {
         if(panelUI != null)
@@ -87,34 +91,13 @@ public class UIManager : MonoBehaviour
         GameObject connectorObject = GameObject.Find("Conector");
         conect = connectorObject.AddComponent<Conector>();
         
-        textPower.text = "енергії: " + conect.InfoResurcesDic[Res.power];
-        textPiple.text = "робітників: " + conect.InfoResurcesDic[Res.piple];
-        textGold.text = "грошей: " + conect.InfoResurcesDic[Res.gold];
-        textGrass.text = "трави: " + conect.InfoResurcesDic[Res.grass];
-        textHey.text = "сіна: " + conect.InfoResurcesDic[Res.hey];
-        textCow.text = "корів: " + conect.InfoResurcesDic[Res.cow];
-        textMilk.text = "молока: " + conect.InfoResurcesDic[Res.milk];
+        UpgradeTextRes();
+        //UpgradeTextInfoMenu();
+
         masageError.gameObject.SetActive(false);
 
-        /*textCostPower.text = conect.InfoResurcesDic[Res.power]
-            + "( " + ResurcsManager.S.resurcesTempDic[Res.power] + " )";
-        textCostPiple.text = conect.InfoResurcesDic[Res.piple]
-            + "( " +ResurcsManager.S.resurcesTempDic[Res.piple] + " )";
-        textCostGold.text = conect.InfoResurcesDic[Res.gold] 
-            + "( "+ResurcsManager.S.resurcesTempDic[Res.gold] + " )";
-        textCostGrass.text = conect.InfoResurcesDic[Res.grass]
-            + "( "+ResurcsManager.S.resurcesTempDic[Res.grass] + " )";
-        textCostHey.text = conect.InfoResurcesDic[Res.hey]
-            + "( "+ResurcsManager.S.resurcesTempDic[Res.hey] + " )";
-        textCostCow.text = conect.InfoResurcesDic[Res.cow]
-            + "( "+ResurcsManager.S.resurcesTempDic[Res.cow] + " )";
-        textCostMilk.text = conect.InfoResurcesDic[Res.milk]
-            + "( "+ResurcsManager.S.resurcesTempDic[Res.milk] + " )";*/
-
     }
-
-
-    void Update()
+    void UpgradeTextRes()
     {
         textPower.text = "енергії: " + conect.InfoResurcesDic[Res.power];
         textPiple.text = "робітників: " + conect.InfoResurcesDic[Res.piple];
@@ -123,7 +106,9 @@ public class UIManager : MonoBehaviour
         textHey.text = "сіна: " + conect.InfoResurcesDic[Res.hey];
         textCow.text = "корів: " + conect.InfoResurcesDic[Res.cow];
         textMilk.text = "молока: " + conect.InfoResurcesDic[Res.milk];
-        MethodMasageErrore();
+    }
+    void UpgradeTextTempRes()
+    {
         textCostPower.text = ResurcsManager.S.ResTempDicAdd[Res.power]
             + "( -" + ResurcsManager.S.ResTempDicRemove[Res.power] + " )";
         textCostPiple.text = ResurcsManager.S.ResTempDicAdd[Res.piple]
@@ -138,7 +123,28 @@ public class UIManager : MonoBehaviour
             + "( -" + ResurcsManager.S.ResTempDicRemove[Res.cow] + " )";
         textCostMilk.text = ResurcsManager.S.ResTempDicAdd[Res.milk]
             + "( -" + ResurcsManager.S.ResTempDicRemove[Res.milk] + " )";
-        
+
+    }
+    void UpgradeTextInfoMenu()
+    {
+        textFermStepOfGame.text = "Ферма хід " + GameManager.S.WeakNumber + " з 10";
+        textManeyForStep.text = "Зароблено " + ResurcsManager.S.GoldInWeak + " за хід";
+        textManeyForLastStep.text = "за минулий період 100";
+        textCredit.text = "кредит 100";
+        textTax.text = "податок 100";
+        textBuildExpenses.text = "витрати на будівництво 100";
+        textResult.text = "ітог 100";
+
+    }
+
+    void Update()
+    {
+
+        MethodMasageErrore();
+
+        UpgradeTextTempRes();
+        UpgradeTextInfoMenu();
+        UpgradeTextRes();
     }
 
     public void ActiveMasageErrore(string mesage)
@@ -151,7 +157,6 @@ public class UIManager : MonoBehaviour
         elapsedTime = 0f; 
         isFading = false;
     }   
-
     private void MethodMasageErrore()
     {
         if(masageError.gameObject.activeSelf)

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 45dbb4281fac587408e07e325ffdfaef
+guid: f1e411b9fb0301748afbb4910126a300
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -119,28 +119,91 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ResForFarm_0
+      name: Oborud_0
       rect:
         serializedVersion: 2
-        x: 1404
-        y: 1008
-        width: 45
-        height: 48
+        x: 1185
+        y: 1010
+        width: 26
+        height: 27
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fce136972faf98b468580e307c3a7000
-      internalID: 162089400
+      spriteID: 66c26f4f807ac344cb07819f6884c1e5
+      internalID: 630607532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ResForFarm_1
+      name: Oborud_1
+      rect:
+        serializedVersion: 2
+        x: 1243
+        y: 1007
+        width: 74
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 066e7851eadda6147ba5cc95df3d3d6b
+      internalID: 1436340784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oborud_2
+      rect:
+        serializedVersion: 2
+        x: 1338
+        y: 1011
+        width: 47
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53b93d08267d1dd47965dd732b41ddf6
+      internalID: 2064702738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oborud_3
+      rect:
+        serializedVersion: 2
+        x: 1407
+        y: 1008
+        width: 40
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec8cda3b8fa54c249baa5db9a6ae78a4
+      internalID: 1815042729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Oborud_4
       rect:
         serializedVersion: 2
         x: 1478
@@ -154,14 +217,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 55f2648a894de094186d99ca33fee034
-      internalID: 1275301655
+      spriteID: 18bb2b4a1b22eba4a9fe9377fd09626b
+      internalID: 254984641
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ResForFarm_2
+      name: Oborud_5
       rect:
         serializedVersion: 2
         x: 1544
@@ -175,14 +238,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd544b8c999fc2640acfc4b9bfa06a23
-      internalID: 1846874625
+      spriteID: c9758b7e805f7f7459ddadce26d5b012
+      internalID: -626528785
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ResForFarm_3
+      name: Oborud_6
       rect:
         serializedVersion: 2
         x: 1590
@@ -196,8 +259,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79b3aceef48b0a447bc321b9528d59e0
-      internalID: 661678306
+      spriteID: 6868d0f8cf9f03c4fa19dd6327954692
+      internalID: -1602670573
       vertices: []
       indices: 
       edges: []
@@ -213,10 +276,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      ResForFarm_0: 162089400
-      ResForFarm_1: 1275301655
-      ResForFarm_2: 1846874625
-      ResForFarm_3: 661678306
+      Oborud_0: 630607532
+      Oborud_1: 1436340784
+      Oborud_2: 2064702738
+      Oborud_3: 1815042729
+      Oborud_4: 254984641
+      Oborud_5: -626528785
+      Oborud_6: -1602670573
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

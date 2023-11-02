@@ -6,13 +6,18 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager S;
 
-    private Conector conect;
+
+    private int _weakNumber = 0;
+    public  int WeakNumber
+    {
+        get{return _weakNumber;}
+    }
 
     private void Start()
     {
         S = this;
-        GameObject connectorObject = GameObject.Find("Conector");
-        conect = connectorObject.AddComponent<Conector>(); 
+
+        _weakNumber = 1;
     }
 
     public void GoToNextWeek()
@@ -22,9 +27,8 @@ public class GameManager : MonoBehaviour
             ResurcsManager.S.toNextWekResursInDB();
             ResurcsManager.S.toNextWekResursTempDic(); 
         }
+        _weakNumber += 1;
 
-
-        
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -23,6 +24,9 @@ public class BuildManager : MonoBehaviour
     public Sprite gearSinovalSprite;
     public Sprite gearKorovnikSprite;
     public Sprite gearDoilniaSprite;
+    public Sprite gearOfficeSprite;
+    public Sprite gearMagazinSprite;
+    public Sprite gearHauseSprite;
 
     [Header("Setting sprite Stop/Play")]
     public Sprite stopSpr;
@@ -33,25 +37,29 @@ public class BuildManager : MonoBehaviour
     public GameObject prefabGear;
     public GameObject prefabStop;
 
+    [Header("Setting List Builds")]
+    public List <Build> buildDic;
+
+
 
 
     private Build build;   
-    private Korivnuk buildKorivnuk;
+
+    /*private Korivnuk buildKorivnuk;
     private Hause buildHause;
     private Magazin buildMagazin;
     private Molocodoil buildMolocodoil;
     private Office buildOffice;
     private Pole buildPole;
-    private Sinoval buildSinoval;
+    private Sinoval buildSinoval;*/
+    //private DirBuilder dirBuild;
 
-    private DirBuilder dirBuild;
     private GameObject goBuild;
     private SpriteRenderer sprTemp;
     private int key;
     private Conector conect;
     private GameObject goGear;
     private GameObject goStop;
-    private Dictionary<int,GameObject> _goStopDic = new Dictionary<int, GameObject>();
 
 
 
@@ -60,8 +68,9 @@ public class BuildManager : MonoBehaviour
         S = this;
         GameObject connectorObject = GameObject.Find("Conector");
         conect = connectorObject.AddComponent<Conector>(); 
+        
 
-        dirBuild = new DirBuilder();
+        /*dirBuild = new DirBuilder();
 
         buildOffice = new Office();
         buildMagazin = new Magazin();
@@ -69,7 +78,7 @@ public class BuildManager : MonoBehaviour
         buildPole = new Pole();
         buildSinoval = new Sinoval();
         buildKorivnuk = new Korivnuk();
-        buildMolocodoil = new Molocodoil();
+        buildMolocodoil = new Molocodoil();*/
 
     }
 
@@ -86,50 +95,50 @@ public class BuildManager : MonoBehaviour
 
         if(tempNameBuilder == "Office")
         {
-            dirBuild.SetBuildBuilder(buildOffice);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildOffice);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = office;
 
         } 
         else if(tempNameBuilder == "Magazine")
         {
-            dirBuild.SetBuildBuilder(buildMagazin);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildMagazin);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = magazin;
 
         } 
         else if(tempNameBuilder == "Hause")
         {
-            dirBuild.SetBuildBuilder(buildHause);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildHause);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = hause;
 
         } 
         else if(tempNameBuilder == "Pole")
         {
-            dirBuild.SetBuildBuilder(buildPole);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildPole);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = pole;
 
         } 
         else if(tempNameBuilder == "Sinoval")
         {
-            dirBuild.SetBuildBuilder(buildSinoval);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildSinoval);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = sinoval;
 
         } 
         else if(tempNameBuilder == "Korovnik")
         {
-            dirBuild.SetBuildBuilder(buildKorivnuk);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildKorivnuk);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = korovnik;
 
         } 
         else if(tempNameBuilder == "Doilka")
         {
-            dirBuild.SetBuildBuilder(buildMolocodoil);
-            MakeBuild();
+            //dirBuild.SetBuildBuilder(buildMolocodoil);
+            MakeBuild(tempNameBuilder);
             sprTemp.sprite = doilnia;
 
         } 
@@ -145,14 +154,38 @@ public class BuildManager : MonoBehaviour
         return key;
     }
 
-    private  void MakeBuild()
+    private  void MakeBuild(string tempNameBuilder)
     {
-        dirBuild.ConstructionBuild();
-        build = dirBuild.GetBuild();
+
+        build = new Build();
+        build = SorchBuildInBuildDic(tempNameBuilder);
+
         build.name = build.name + key;
         conect.AddBuildToBuildsDBDic(key,build);
         ResurcsManager.S.ResourcesForBuilding(build);
-        
+    }
+
+    private Build SorchBuildInBuildDic(string tempNameBuild)
+    {
+        var bS = new Build();
+        foreach (var buildS in buildDic)
+        {   
+            if(buildS.name == tempNameBuild)
+            {
+                bS.name = buildS.name;
+                bS.cinaBuild = buildS.cinaBuild;
+                bS.cinaOborud = buildS.cinaOborud;
+                bS.cinaRes = buildS.cinaRes;
+                bS.oborud = buildS.oborud;
+                bS.maxOborud = buildS.maxOborud;
+                bS.resursProduct = buildS.resursProduct;
+                bS.storageResursProduct = buildS.storageResursProduct;
+                bS.resursNeedDic = buildS.resursNeedDic;
+                bS.work = true;
+                bS.resNeedDic = buildS.resNeedDic;
+            }
+        }
+        return bS;
     }
 
     public void OverlayBuildToHexDB(HexTile hex) 
@@ -164,24 +197,29 @@ public class BuildManager : MonoBehaviour
     {
         if(build.oborud <= build.maxOborud)
         {
-            
+            int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;       
             build.oborud += 1;
 
             ResurcsManager.S.resurceForAddGear(build);
+            
+            goGear = goBuild = Instantiate(prefabGear, conect.InfoGOBuildDBDic[keyT].transform);
 
-            goGear = goBuild = Instantiate(prefabGear) as GameObject;
-            int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;
             goGear.transform.position = RandomVec (conect.InfoGOBuildDBDic[keyT].transform.position);
             sprTemp = goGear.GetComponent<SpriteRenderer>();
             if(build.name.StartsWith("Pole")) sprTemp.sprite = gearPoleSprite;
             else if(build.name.StartsWith("Sinoval")) sprTemp.sprite = gearSinovalSprite;
             else if(build.name.StartsWith("Korivnuk")) sprTemp.sprite = gearKorovnikSprite;
             else if(build.name.StartsWith("Molocodoilka")) sprTemp.sprite = gearDoilniaSprite;
+            else if(build.name.StartsWith("Office")) sprTemp.sprite = gearOfficeSprite;
+            else if(build.name.StartsWith("Dim")) sprTemp.sprite = gearHauseSprite;
+            else if(build.name.StartsWith("Magazin")) sprTemp.sprite = gearMagazinSprite;
+
             else  Debug.Log("AddGear.build.name.StartsWith problem");
 
         }
         else
         {
+            UIManager.S.ActiveMasageErrore("Max oborud");
             Debug.Log("Max oborud");
         }
     }
@@ -196,19 +234,20 @@ public class BuildManager : MonoBehaviour
 
     public void StopBuildinDB(Build build)
     {
+        Debug.Log("StopBuildinDB ");
         if(build.work)
         {
+            Debug.Log("StopBuildinDB build work");
             int keyT = conect.InfoBuildsDBDic.FirstOrDefault(pair => pair.Value == build).Key;
             conect.StopBuildinDB(keyT);
             ResurcsManager.S.ResurceForStopBuid();
             Debug.Log("keyT " + keyT);
-            goStop = Instantiate(prefabStop) as GameObject;
+            goStop = Instantiate(prefabStop, conect.InfoGOBuildDBDic[keyT].transform);
             Vector3 vect3SBT = conect.InfoGOBuildDBDic[keyT].transform.position;
             vect3SBT.z = -1f;
             goStop.transform.position = vect3SBT;
             sprTemp = goStop.GetComponent<SpriteRenderer>();
             sprTemp.sprite = stopSpr;
-            _goStopDic.Add(keyT,goStop);
             
         }
     }
@@ -220,8 +259,7 @@ public class BuildManager : MonoBehaviour
             conect.PlayBuildinDB(keyT);
             ResurcsManager.S.ResurceForPlayBuid(); 
 
-            GameObject destroyGoStop = _goStopDic[keyT];
-            _goStopDic.Remove(keyT);
+            GameObject destroyGoStop = conect.InfoGOBuildDBDic[keyT].transform.Find("Stop(Clone)").gameObject;
             Destroy(destroyGoStop);
         }
     }
@@ -231,12 +269,5 @@ public class BuildManager : MonoBehaviour
         GameObject gameObjectToRemove = conect.InfoGOBuildDBDic[destroyKey];
         conect.RemoveGOToGOBuildDic(destroyKey);
         Destroy(gameObjectToRemove);
-
-        if(_goStopDic[destroyKey] != null)
-        {
-            GameObject destroyGoStop = _goStopDic[destroyKey];
-            _goStopDic.Remove(destroyKey);
-            Destroy(destroyGoStop);
-        }
     } 
 }
