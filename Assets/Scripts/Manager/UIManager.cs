@@ -125,10 +125,12 @@ public class UIManager : MonoBehaviour
             + "( -" + ResurcsManager.S.ResTempDicRemove[Res.milk] + " )";
 
     }
-    void UpgradeTextInfoMenu()
+    public void UpgradeTextInfoMenu()
     {
         textFermStepOfGame.text = "Ферма хід " + GameManager.S.WeakNumber + " з 10";
-        textManeyForStep.text = "Зароблено " + ResurcsManager.S.GoldInWeak + " за хід";
+        textManeyForStep.text = "Зароблено "
+        + (ResurcsManager.S.ResTempDicAdd[Res.gold] - ResurcsManager.S.ResTempDicRemove[Res.gold])
+        + " за хід";
         textManeyForLastStep.text = "за минулий період 100";
         textCredit.text = "кредит 100";
         textTax.text = "податок 100";

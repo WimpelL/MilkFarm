@@ -15,7 +15,7 @@ public class Build
     public int maxOborud = 0;
     public Res resursProduct = Res.none;
     public int storageResursProduct = 0;
-    public Dictionary<Res,int> resursNeedDic = new Dictionary<Res, int>();
+    //public Dictionary<Res,int> resursNeedDic = new Dictionary<Res, int>();
     public bool work = true;
     public List<ResNead> resNeedDic = new List<ResNead>();
 }

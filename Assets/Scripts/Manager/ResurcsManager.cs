@@ -13,11 +13,11 @@ public class ResurcsManager : MonoBehaviour
     
     private Conector conect;
 
-    private int _goldInWeak;
+    /*private int _goldInWeak;
     public int GoldInWeak
     {
         get{return _goldInWeak;}
-    }
+    }*/
 
     private void Start()
     {
@@ -48,7 +48,7 @@ public class ResurcsManager : MonoBehaviour
             ResTempDicRemove[res.Key] = 0;
         }
         //обнуление поточного золота
-        _goldInWeak = 0;
+        UIManager.S.UpgradeTextInfoMenu();
         // Занесення в темповий словник витрати минулого тижня     
         ResTempDicAdd[Res.power] += pipleBaza;
         ResTempDicAdd[Res.piple] += pipleBaza;          
@@ -56,20 +56,22 @@ public class ResurcsManager : MonoBehaviour
         {
             if(build.Value.work)
             {
-                foreach (var res in build.Value.resursNeedDic)
+                foreach (var resNead in build.Value.resNeedDic)
                 {
-                    ResTempDicRemove[res.Key] += res.Value * build.Value.oborud;
-                    if(res.Key == Res.gold) _goldInWeak -= res.Value;
+                    ResTempDicRemove[resNead.res] += resNead.sum * build.Value.oborud;
+                    //if(resNead.res == Res.gold) _goldInWeak -= resNead.sum;
+
                 }
                 ResTempDicAdd[build.Value.resursProduct] +=
                 build.Value.storageResursProduct * build.Value.oborud;
                 
-                if(build.Value.name.StartsWith("Magazin")) _goldInWeak +=
-                build.Value.storageResursProduct * build.Value.oborud;
+                //if(build.Value.name.StartsWith("Magazin")) _goldInWeak +=
+                //build.Value.storageResursProduct * build.Value.oborud;
                                
             }
 
         }
+        UIManager.S.UpgradeTextInfoMenu();
 
     }
 
@@ -82,15 +84,16 @@ public class ResurcsManager : MonoBehaviour
             if(build.Value.work)
             {
                 //Поточні витрати ресурсів
-                foreach (var res in build.Value.resursNeedDic)
+                foreach (var res in build.Value.resNeedDic)
                 {
-                    conect.RemoveResToResurcsBD(res.Key, res.Value * build.Value.oborud);
+                    conect.RemoveResToResurcsBD(res.res, res.sum * build.Value.oborud);
                 }
                 //Поточні надходження ресурсів
                 conect.AddResToResurcsBD(build.Value.resursProduct,
-                 build.Value.storageResursProduct * build.Value.oborud);
+                build.Value.storageResursProduct * build.Value.oborud);
             }
         }
+        UIManager.S.UpgradeTextInfoMenu();
     }
 
 
@@ -107,15 +110,20 @@ public class ResurcsManager : MonoBehaviour
         ResTempDicRemove[Res.piple] += 1;
 
         //Поточні витрати ресурсів in Temp
-        foreach (var res in build.resursNeedDic)
+        /* foreach (var res in build.resursNeedDic)
         {
             ResTempDicRemove[res.Key] += res.Value;
-        }
+        }*/
+        foreach (var resNead in build.resNeedDic)
+        {
+            ResTempDicRemove[resNead.res] += resNead.sum;
+        }        
         if( build.resursProduct != Res.gold &&
             build.resursProduct != Res.power &&
             build.resursProduct != Res.piple )
         ResTempDicAdd[build.resursProduct] += build.storageResursProduct;
-        
+        UIManager.S.UpgradeTextInfoMenu();
+
     }
 
     public void ResurceForStopBuid()
@@ -123,12 +131,14 @@ public class ResurcsManager : MonoBehaviour
         ResTempDicRemove[Res.power] -= 1;
         ResTempDicRemove[Res.piple] -= 1;
         ResTempDicRemove[Res.gold]  += 1;
+        UIManager.S.UpgradeTextInfoMenu();
     }
     public void ResurceForPlayBuid()
     {
         ResTempDicRemove[Res.power] += 1;
         ResTempDicRemove[Res.piple] += 1;
         ResTempDicRemove[Res.gold] += 1; 
+        UIManager.S.UpgradeTextInfoMenu();
     }
     public void resurceForAddGear(Build build)
     {
@@ -141,14 +151,19 @@ public class ResurcsManager : MonoBehaviour
         ResTempDicRemove[Res.power] +=  1; 
         ResTempDicRemove[Res.piple] +=  1; 
         //Поточні витрати ресурсів in Temp
-        foreach (var res in build.resursNeedDic)
+        /*foreach (var res in build.resursNeedDic)
         {
             ResTempDicRemove[res.Key] += res.Value;
-        }
+        }*/
+        foreach (var resNead in build.resNeedDic)
+        {
+            ResTempDicRemove[resNead.res] += resNead.sum;
+        }  
         if( build.resursProduct != Res.gold &&
             build.resursProduct != Res.power &&
             build.resursProduct != Res.piple )
         ResTempDicAdd[build.resursProduct] += build.storageResursProduct;
+        UIManager.S.UpgradeTextInfoMenu();
     }
 
 

@@ -158,14 +158,14 @@ public class BuildManager : MonoBehaviour
     {
 
         build = new Build();
-        build = SorchBuildInBuildDic(tempNameBuilder);
+        build = MakeBuildForSorchInBuildDic(tempNameBuilder);
 
         build.name = build.name + key;
         conect.AddBuildToBuildsDBDic(key,build);
         ResurcsManager.S.ResourcesForBuilding(build);
     }
 
-    private Build SorchBuildInBuildDic(string tempNameBuild)
+    private Build MakeBuildForSorchInBuildDic(string tempNameBuild)
     {
         var bS = new Build();
         foreach (var buildS in buildDic)
@@ -180,7 +180,6 @@ public class BuildManager : MonoBehaviour
                 bS.maxOborud = buildS.maxOborud;
                 bS.resursProduct = buildS.resursProduct;
                 bS.storageResursProduct = buildS.storageResursProduct;
-                bS.resursNeedDic = buildS.resursNeedDic;
                 bS.work = true;
                 bS.resNeedDic = buildS.resNeedDic;
             }

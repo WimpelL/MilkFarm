@@ -12,5 +12,4 @@ public enum Res
     hey,
     cow,    
     milk
-
 }
